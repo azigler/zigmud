@@ -1,0 +1,11 @@
+node_modules
+
+data/player/*.json
+data/account/*.json
+!data/player/.gitkeep
+!data/account/.gitkeep
+
+log/*.log
+!log/.gitkeep
+
+.DS_Store
