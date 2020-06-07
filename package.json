@@ -5,6 +5,8 @@
     "type": "git",
     "url": "git://github.com/azigler/zigmud.git"
   },
+  "description": "Experimental fork of RanvierMUD/trpg-skeleton",
+  "author": "Andrew Zigler <andrewzigler@gmail.com> (https://www.andrewzigler.com)",
   "engines": {
     "node": ">= 10.12.0"
   },
