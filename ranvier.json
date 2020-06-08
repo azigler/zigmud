@@ -75,6 +75,6 @@
   "maxPlayerNameLength": 20,
   "minPlayerNameLength": 3,
   "maxCharacters": 3,
-  "startingRoom": "tiny:start",
+  "startingRoom": "demo:start",
   "defaultMaxPlayerInventory": 16
 }
