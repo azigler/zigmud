@@ -1,44 +1,44 @@
-'use strict';
+'use strict'
 
-const fs = require('fs');
-const { execSync, spawnSync } = require('child_process');
-const commander = require('commander');
+const fs = require('fs')
+const { execSync, spawnSync } = require('child_process')
+const commander = require('commander')
 
-const gitRoot = execSync('git rev-parse --show-toplevel').toString('utf8').trim();
+const gitRoot = execSync('git rev-parse --show-toplevel').toString('utf8').trim()
 
-process.chdir(gitRoot);
+process.chdir(gitRoot)
 
-commander.command('update-bundle-remote <bundle name> <remote url>');
-commander.parse(process.argv);
+commander.command('update-bundle-remote <bundle name> <remote url>')
+commander.parse(process.argv)
 
-const [bundle, remote] = commander.args;
+const [bundle, remote] = commander.args
 
 if (bundle === 'update-all') {
-  spawnSync('git submodule update --init --recursive --remote');
+  spawnSync('git submodule update --init --recursive --remote')
 
-  process.exit(0);
+  process.exit(0)
 }
 
 if (commander.args.length < 2) {
-  console.error(`Syntax: ${process.argv0} <bundle> <remote url>`);
-  process.exit(0);
+  console.error(`Syntax: ${process.argv0} <bundle> <remote url>`)
+  process.exit(0)
 }
 
 if (!fs.existsSync(gitRoot + `/bundles/${bundle}`)) {
-  console.error('Not a valid bundle name');
-  process.exit(0);
+  console.error('Not a valid bundle name')
+  process.exit(0)
 }
 
 try {
-  execSync(`git ls-remote ${remote}`);
+  execSync(`git ls-remote ${remote}`)
 } catch (err) {
-  process.exit(0);
+  process.exit(0)
 }
 
-console.log("Configuring bundle...");
-execSync(`git config -f .gitmodules "submodule.bundles/${bundle}.url" ${remote}`, { stdio: 'ignore' });
-console.log("Syncing bundle...");
-execSync('git submodule sync', { stdio: 'ignore' });
-console.log("Updating bundle...");
-execSync('git submodule update --init --recursive --remote', { stdio: 'ignore' });
-execSync(`npm run install-bundle ${bundle}`, { stdio: 'ignore' });
+console.log('Configuring bundle...')
+execSync(`git config -f .gitmodules "submodule.bundles/${bundle}.url" ${remote}`, { stdio: 'ignore' })
+console.log('Syncing bundle...')
+execSync('git submodule sync', { stdio: 'ignore' })
+console.log('Updating bundle...')
+execSync('git submodule update --init --recursive --remote', { stdio: 'ignore' })
+execSync(`npm run install-bundle ${bundle}`, { stdio: 'ignore' })

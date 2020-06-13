@@ -1,7 +1,7 @@
-'use strict';
+'use strict'
 
 module.exports = class Abilities {
-  static getBonus(value) {
-    return Math.floor((value - 10) / 2);
+  static getBonus (value) {
+    return Math.floor((value - 10) / 2)
   }
-};
+}

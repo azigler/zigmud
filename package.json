@@ -17,7 +17,8 @@
     "postinstall": "node ./util/install-bundle install-all",
     "update-bundle": "node ./util/update-bundle.js",
     "remove-bundle": "node ./util/remove-bundle.js",
-    "install-bundle": "node ./util/install-bundle.js"
+    "install-bundle": "node ./util/install-bundle.js",
+    "lint": "eslint . --ext .js --fix --ignore-pattern '**/node_modules/**'"
   },
   "dependencies": {
     "commander": "^2.19.0",
@@ -30,6 +31,26 @@
     "winston": "^2.4.4"
   },
   "devDependencies": {
-    "git-url-parse": "^11.1.2"
+    "git-url-parse": "^11.1.2",
+    "eslint": "^6.8.0",
+    "eslint-plugin-import": "^2.20.2",
+    "eslint-plugin-standard": "^4.0.1",
+    "node-sass": "^4.14.0",
+    "standard": "^14.3.3"
+  },
+  "eslintConfig": {
+    "root": true,
+    "parserOptions": {
+      "ecmaVersion": 2020
+    },
+    "extends": [
+      "standard"
+    ],
+    "plugins": [
+      "standard"
+    ],
+    "rules": {
+      "no-console": 0
+    }
   }
 }
