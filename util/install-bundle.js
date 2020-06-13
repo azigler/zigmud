@@ -27,7 +27,7 @@ if (remote === 'install-all') {
     });
   }
 
-  const dirs = getDirectories('./bundles')
+  const dirs = getDirectories('./bundles');
 
   for (const dir of dirs) {
     if (fs.existsSync(`${gitRoot}/bundles/${dir}/package.json`)) {

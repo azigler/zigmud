@@ -15,7 +15,7 @@
     "start": "node ./ranvier -v",
     "init": "node ./util/init-bundles.js",
     "postinstall": "node ./util/install-bundle install-all",
-    "update-bundle-remote": "node ./util/update-bundle-remote.js",
+    "update-bundle": "node ./util/update-bundle.js",
     "remove-bundle": "node ./util/remove-bundle.js",
     "install-bundle": "node ./util/install-bundle.js"
   },

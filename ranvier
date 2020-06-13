@@ -89,7 +89,6 @@ async function init(restartServer) {
     AttributeFactory: new Ranvier.AttributeFactory(),
     ChannelManager: new Ranvier.ChannelManager(),
     CommandManager: new Ranvier.CommandManager(),
-    Config,
     EffectFactory: new Ranvier.EffectFactory(),
     HelpManager: new Ranvier.HelpManager(),
     InputEventManager: new Ranvier.EventManager(),
