@@ -1,6 +1,7 @@
 {
   "port": 4334,
   "bundles": [
+    "ranvier-webhooks",
     "telnet-networking",
     "tiny",
     "turn-combat"
