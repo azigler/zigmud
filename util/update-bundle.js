@@ -15,6 +15,8 @@ const [bundle, remote] = commander.args
 
 if (bundle === 'update-all') {
   spawnSync('git submodule update --init --recursive --remote')
+  spawnSync('git submodule foreach git fetch origin master')
+  spawnSync('git submodule foreach git reset --hard FETCH_HEAD')
 
   process.exit(0)
 }

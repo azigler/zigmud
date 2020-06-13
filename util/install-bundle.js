@@ -65,6 +65,7 @@ try {
 
 console.log('Adding bundle...')
 cp.execSync(`git submodule add ${remote} bundles/${name}`)
+cp.execSync('git submodule init')
 
 console.log('Installing dependencies...')
 if (fs.existsSync(`${gitRoot}/bundles/${name}/package.json`)) {
