@@ -1,6 +1,6 @@
-'use strict';
+'use strict'
 
-const Abilities = require('./lib/Abilities');
+const Abilities = require('./lib/Abilities')
 
 module.exports = [
   { name: 'agility', base: 10 },
@@ -12,10 +12,8 @@ module.exports = [
     formula: {
       requires: ['agility'],
       fn: function (character, initiative, agility) {
-        return initiative + Abilities.getBonus(agility);
-      },
-    },
-  },
-];
-
-
+        return initiative + Abilities.getBonus(agility)
+      }
+    }
+  }
+]

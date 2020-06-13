@@ -1,13 +1,12 @@
-'use strict';
+'use strict'
 
-const { Broadcast: B } = require('ranvier');
+const { Broadcast: B } = require('ranvier')
 
 module.exports = {
   command: state => (args, player) => {
-    player.combatData.controller.menu.showMenu(player);
+    player.combatData.controller.menu.showMenu(player)
   },
   metadata: {
-    combatOnly: true,
-  },
-};
-
+    combatOnly: true
+  }
+}

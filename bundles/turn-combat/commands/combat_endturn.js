@@ -1,19 +1,18 @@
-'use strict';
+'use strict'
 
-const { Broadcast: B } = require('ranvier');
+const { Broadcast: B } = require('ranvier')
 
 module.exports = {
   command: state => (args, player) => {
-    const { onTurn, controller } = player.combatData;
+    const { onTurn, controller } = player.combatData
 
     if (!onTurn) {
-      return B.sayAt(player, "It's not your turn.");
+      return B.sayAt(player, "It's not your turn.")
     }
 
-    controller.nextTurn();
+    controller.nextTurn()
   },
   metadata: {
-    combatOnly: true,
-  },
-};
-
+    combatOnly: true
+  }
+}

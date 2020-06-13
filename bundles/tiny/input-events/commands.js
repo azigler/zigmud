@@ -1,77 +1,76 @@
-'use strict';
+'use strict'
 
-const { Broadcast: B, CommandType, Logger, PlayerRoles } = require('ranvier');
-const { NoPartyError, NoRecipientError, NoMessageError } = require('ranvier').Channel;
+const { Broadcast: B, CommandType, Logger, PlayerRoles } = require('ranvier')
+const { NoPartyError, NoRecipientError, NoMessageError } = require('ranvier').Channel
 const {
   CommandParser,
   InvalidCommandError,
-  RestrictedCommandError,
-} = require('../../../lib/CommandParser');
+  RestrictedCommandError
+} = require('../../../lib/CommandParser')
 
 module.exports = {
   event: state => player => {
     player.socket.once('data', data => {
       function loop () {
-        player.socket.emit('commands', player);
+        player.socket.emit('commands', player)
       }
-      data = data.toString().trim();
+      data = data.toString().trim()
 
       if (!data.length) {
-        B.prompt(player);
-        return loop();
+        B.prompt(player)
+        return loop()
       }
 
       try {
         if (player.combatData && player.combatData.controller) {
-          player.combatData.controller.parseInput(player, data);
-          B.prompt(player);
-          return loop();
+          player.combatData.controller.parseInput(player, data)
+          B.prompt(player)
+          return loop()
         }
 
-        const result = CommandParser.parse(state, data, player);
+        const result = CommandParser.parse(state, data, player)
         if (!result) {
-          throw null;
+          throw null
         }
 
         switch (result.type) {
           case CommandType.MOVEMENT: {
-            player.emit('move', result);
-            break;
+            player.emit('move', result)
+            break
           }
 
           case CommandType.COMMAND: {
-            const { requiredRole = PlayerRoles.PLAYER } = result.command;
+            const { requiredRole = PlayerRoles.PLAYER } = result.command
             if (requiredRole > player.role) {
-              throw new RestrictedCommandError();
+              throw new RestrictedCommandError()
             }
-            result.command.execute(result.args, player, result.originalCommand);
-            break;
+            result.command.execute(result.args, player, result.originalCommand)
+            break
           }
         }
       } catch (error) {
-        switch(true) {
+        switch (true) {
           case error instanceof InvalidCommandError:
             // check to see if room has a matching context-specific command
-            const roomCommands = player.room.getMeta('commands');
-            const [commandName, ...args] = data.split(' ');
+            const roomCommands = player.room.getMeta('commands')
+            const [commandName, ...args] = data.split(' ')
             if (roomCommands && roomCommands.includes(commandName)) {
-              player.room.emit('command', player, commandName, args.join(' '));
+              player.room.emit('command', player, commandName, args.join(' '))
             } else {
-              B.sayAt(player, "Huh?");
-              Logger.warn(`WARNING: Player tried non-existent command '${data}'`);
+              B.sayAt(player, 'Huh?')
+              Logger.warn(`WARNING: Player tried non-existent command '${data}'`)
             }
-            break;
+            break
           case error instanceof RestrictedCommandError:
-            B.sayAt(player, "You can't do that.");
-            break;
+            B.sayAt(player, "You can't do that.")
+            break
           default:
-            Logger.error(error);
+            Logger.error(error)
         }
       }
 
-      B.prompt(player);
-      loop();
-    });
+      B.prompt(player)
+      loop()
+    })
   }
-};
-
+}

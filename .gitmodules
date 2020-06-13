@@ -1,3 +1,6 @@
 [submodule "bundles/telnet-networking"]
 	path = bundles/telnet-networking
-	url = https://github.com/ranviermud/telnet-networking
+	url = https://github.com/RanvierMUD/telnet-networking
+[submodule "bundles/ranvier-webhooks"]
+	path = bundles/ranvier-webhooks
+	url = https://github.com/azigler/ranvier-webhooks

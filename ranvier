@@ -1,5 +1,5 @@
 #!/usr/bin/env node
-'use strict';
+'use strict'
 
 /**
  * Main file, use this to run the server:
@@ -11,34 +11,34 @@
  *  -e, --prettyErrors        Pretty-print formatting for error stack traces (false)
  */
 
-
 /* npm modules */
-const semver = require('semver');
-const commander = require('commander');
-const fs = require('fs');
+const semver = require('semver')
+const commander = require('commander')
+const fs = require('fs')
+const path = require('path')
 
-const Ranvier = require('ranvier');
-const Config = Ranvier.Config;
+const Ranvier = require('ranvier')
+const Config = Ranvier.Config
 
 // package.json for versioning
-const pkg = require('./package.json');
+const pkg = require('./package.json')
 
 if (!semver.satisfies(process.version, pkg.engines.node)) {
   throw new Error(
     `Ranvier's core engine requires Node version ${pkg.engines.node},
     you are currently running Node ${process.version}.`
-  );
+  )
 }
 
 // wrapper for ranvier.json
-Ranvier.Data.setDataPath(__dirname + '/data/');
+Ranvier.Data.setDataPath(path.join(__dirname, '/data/'))
 if (fs.existsSync('./ranvier.conf.js')) {
-  Config.load(require('./ranvier.conf.js'));
+  Config.load(require('./ranvier.conf.js'))
 } else if (fs.existsSync('./ranvier.json')) {
-  Config.load(require('./ranvier.json'));
+  Config.load(require('./ranvier.json'))
 } else {
-  console.error('ERROR: No ranvier.json or ranvier.conf.js found');
-  process.exit(1);
+  console.error('ERROR: No ranvier.json or ranvier.conf.js found')
+  process.exit(1)
 }
 
 // command line options
@@ -47,39 +47,38 @@ commander
   .option('-p, --port [portNumber]', 'Port to host the server [23]', Ranvier.Config.get('port', 23))
   .option('-v, --verbose', 'Verbose console logging.', true)
   .option('-e, --prettyErrors', 'Pretty-print formatting for error stack traces.', false)
-  .parse(process.argv);
+  .parse(process.argv)
 
 // set debug variable and encoding
-process.env.NODE_DEBUG = 'net';
-process.stdin.setEncoding('utf8');
+process.env.NODE_DEBUG = 'net'
+process.stdin.setEncoding('utf8')
 
-const Logger = Ranvier.Logger;
-const logfile = Ranvier.Config.get('logfile');
+const Logger = Ranvier.Logger
+const logfile = Ranvier.Config.get('logfile')
 if (logfile) {
-  Logger.setFileLogging(`${__dirname}/log/${logfile}`);
+  Logger.setFileLogging(`${__dirname}/log/${logfile}`)
 }
 
 if (commander.prettyErrors) {
-  Logger.enablePrettyErrors();
+  Logger.enablePrettyErrors()
 }
 
 // set logging level based on CLI option or environment variable
-const logLevel = commander.verbose ?
-  'verbose' :
-  process.env.LOG_LEVEL || Config.get('logLevel') || 'debug';
-Logger.setLevel(logLevel);
-
+const logLevel = commander.verbose
+  ? 'verbose'
+  : process.env.LOG_LEVEL || Config.get('logLevel') || 'debug'
+Logger.setLevel(logLevel)
 
 // global state object, server instance and configurable intervals
-let GameState = {};
-let tickInterval, playerTickInterval;
+let GameState = {}
+let tickInterval, playerTickInterval
 
 /**
  * Do the dirty work
  */
-async function init(restartServer) {
-  Logger.log("START - Loading entities");
-  restartServer = typeof restartServer === 'undefined' ? true : restartServer;
+async function init (restartServer) {
+  Logger.log('START - Loading entities')
+  restartServer = typeof restartServer === 'undefined' ? true : restartServer
 
   GameState = {
     AccountManager: new Ranvier.AccountManager(),
@@ -89,7 +88,6 @@ async function init(restartServer) {
     AttributeFactory: new Ranvier.AttributeFactory(),
     ChannelManager: new Ranvier.ChannelManager(),
     CommandManager: new Ranvier.CommandManager(),
-    Config,
     EffectFactory: new Ranvier.EffectFactory(),
     HelpManager: new Ranvier.HelpManager(),
     InputEventManager: new Ranvier.EventManager(),
@@ -114,40 +112,40 @@ async function init(restartServer) {
     DataLoader: Ranvier.Data,
     EntityLoaderRegistry: new Ranvier.EntityLoaderRegistry(),
     DataSourceRegistry: new Ranvier.DataSourceRegistry(),
-    Config,
-  };
+    Config
+  }
 
   // set up entity loaders
-  GameState.DataSourceRegistry.load(require, __dirname, Config.get('dataSources'));
-  GameState.EntityLoaderRegistry.load(GameState.DataSourceRegistry, Config.get('entityLoaders'));
+  GameState.DataSourceRegistry.load(require, __dirname, Config.get('dataSources'))
+  GameState.EntityLoaderRegistry.load(GameState.DataSourceRegistry, Config.get('entityLoaders'))
 
-  GameState.AccountManager.setLoader(GameState.EntityLoaderRegistry.get('accounts'));
-  GameState.PlayerManager.setLoader(GameState.EntityLoaderRegistry.get('players'));
+  GameState.AccountManager.setLoader(GameState.EntityLoaderRegistry.get('accounts'))
+  GameState.PlayerManager.setLoader(GameState.EntityLoaderRegistry.get('players'))
 
   // set up bundlemanager
-  const BundleManager = new Ranvier.BundleManager(__dirname + '/bundles/', GameState);
-  GameState.BundleManager = BundleManager;
-  await BundleManager.loadBundles();
-  GameState.ServerEventManager.attach(GameState.GameServer);
+  const BundleManager = new Ranvier.BundleManager(path.join(__dirname, '/bundles/'), GameState)
+  GameState.BundleManager = BundleManager
+  await BundleManager.loadBundles()
+  GameState.ServerEventManager.attach(GameState.GameServer)
 
   if (restartServer) {
-    Logger.log("START - Starting server");
-    GameState.GameServer.startup(commander);
+    Logger.log('START - Starting server')
+    GameState.GameServer.startup(commander)
 
     // ticks for effect processing and combat
-    clearInterval(tickInterval);
+    clearInterval(tickInterval)
     tickInterval = setInterval(() => {
-      GameState.AreaManager.tickAll(GameState);
-      GameState.ItemManager.tickAll();
-    }, Config.get('entityTickFrequency', 100));
+      GameState.AreaManager.tickAll(GameState)
+      GameState.ItemManager.tickAll()
+    }, Config.get('entityTickFrequency', 100))
 
-    clearInterval(playerTickInterval);
+    clearInterval(playerTickInterval)
     playerTickInterval = setInterval(() => {
-      GameState.PlayerManager.emit('updateTick');
-    }, Config.get('playerTickFrequency', 100));
+      GameState.PlayerManager.emit('updateTick')
+    }, Config.get('playerTickFrequency', 100))
   }
 }
 
 // START IT UP!
-init();
+init()
 // vim: set syn=javascript :
