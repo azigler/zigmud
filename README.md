@@ -2,7 +2,7 @@
 
 > Experimental fork of [RanvierMUD/trpg-skeleton](https://github.com/RanvierMUD/trpg-skeleton) powered by an experimental fork of [RanvierMUD/core](https://github.com/azigler/core)
 
-##### Instructions
+### Instructions
 
 1. Get a checkout of this experimental fork ([azigler/zigmud](https://github.com/azigler/zigmud))
 2. Get a checkout of the experimental core:develop branch ([azigler/core:develop](https://github.com/azigler/core/tree/develop))
@@ -11,7 +11,7 @@
 
 **Whenever you run `npm install` or `npm update` in your [azigler/zigmud](https://github.com/azigler/zigmud) checkout, you must re-run `npm link ranvier` to re-establish the link.**
 
-##### Bundles
+### Bundles
 
 The following is a list of Ranvier bundles I have created with this project:
 
