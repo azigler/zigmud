@@ -6,6 +6,22 @@
     "turn-combat"
   ],
   "logfile": false,
+  "maxAccountNameLength": 20,
+  "minAccountNameLength": 3,
+  "maxPlayerNameLength": 20,
+  "minPlayerNameLength": 3,
+  "maxCharacters": 3,
+  "startingRoom": "demo:start",
+  "defaultMaxPlayerInventory": 16,
+  "webhooks": {
+    "github": {
+      "port": 8586,
+      "url": "https://www.github.com/azigler/zigmud",
+      "branch": "master",
+      "command": "pm2 restart zigmud",
+      "path": "../../"
+    }
+  },
   "dataSources": {
     "YamlArea": {
       "require": "ranvier-datasource-file.YamlAreaDataSource"
@@ -69,12 +85,5 @@
         "path": "bundles/[BUNDLE]/help"
       }
     }
-  },
-  "maxAccountNameLength": 20,
-  "minAccountNameLength": 3,
-  "maxPlayerNameLength": 20,
-  "minPlayerNameLength": 3,
-  "maxCharacters": 3,
-  "startingRoom": "demo:start",
-  "defaultMaxPlayerInventory": 16
+  }
 }
