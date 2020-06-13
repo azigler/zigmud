@@ -1,6 +1,7 @@
 {
   "port": 4334,
   "bundles": [
+    "ranvier-webhooks",
     "telnet-networking",
     "tiny",
     "turn-combat"
@@ -19,7 +20,7 @@
       "url": "https://www.github.com/azigler/zigmud",
       "branch": "master",
       "command": "pm2 restart zigmud",
-      "path": "../../"
+      "path": "~/zigmud"
     }
   },
   "dataSources": {

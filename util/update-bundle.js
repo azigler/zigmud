@@ -1,7 +1,7 @@
 'use strict'
 
 const fs = require('fs')
-const { execSync, spawnSync } = require('child_process')
+const { execSync } = require('child_process')
 const commander = require('commander')
 
 const gitRoot = execSync('git rev-parse --show-toplevel').toString('utf8').trim()
@@ -14,7 +14,9 @@ commander.parse(process.argv)
 const [bundle, remote] = commander.args
 
 if (bundle === 'update-all') {
-  spawnSync('git submodule update --init --recursive --remote')
+  execSync('git submodule update --init --recursive --remote')
+  execSync('git submodule foreach git fetch origin master')
+  execSync('git submodule foreach git reset --hard FETCH_HEAD')
 
   process.exit(0)
 }
