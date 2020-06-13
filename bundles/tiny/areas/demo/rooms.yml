@@ -2,7 +2,7 @@
 - id: start
   coordinates: [0, 0, 0]
   title: Start
-  description: Empty starting room
+  description: New starting room!
   npcs: ['demo:enemy']
 - id: eastwing
   coordinates: [1, 0, 0]
