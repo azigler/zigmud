@@ -1,6 +1,5 @@
 node_modules
 .env
-test
 
 data/player/*.json
 data/account/*.json
