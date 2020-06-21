@@ -3,17 +3,21 @@
   "bundles": [
     "ranvier-webhooks",
     "telnet-networking",
-    "tiny",
-    "turn-combat"
+    "zig-base",
+    "zig-combat"
   ],
-  "logfile": false,
-  "maxAccountNameLength": 20,
+  "startingRoom": "starting-temple:spawn",
+  "diagonalDirections": false,
   "minAccountNameLength": 3,
-  "maxPlayerNameLength": 20,
+  "maxAccountNameLength": 20,
   "minPlayerNameLength": 3,
-  "maxCharacters": 3,
-  "startingRoom": "demo:start",
+  "maxPlayerNameLength": 20,
+  "maxCharacters": 100,
   "defaultMaxPlayerInventory": 16,
+  "entityTickFrequency": 100,
+  "playerTickFrequency": 100,
+  "logfile": false,
+  "logLevel": "debug",
   "webhooks": {
     "github": {
       "port": 8586,

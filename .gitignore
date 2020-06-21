@@ -11,3 +11,5 @@ log/*.log
 !log/.gitkeep
 
 .DS_Store
+
+ranvier.code-workspace

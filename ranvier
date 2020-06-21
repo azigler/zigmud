@@ -1,8 +1,8 @@
 #!/usr/bin/env node
-'use strict'
 
 /**
- * Main file, use this to run the server:
+ * Main file to run the server:
+ *
  * node ranvier [options]
  *
  * Options:
@@ -11,7 +11,6 @@
  *  -e, --prettyErrors        Pretty-print formatting for error stack traces (false)
  */
 
-/* npm modules */
 const semver = require('semver')
 const commander = require('commander')
 const fs = require('fs')
@@ -20,18 +19,19 @@ const path = require('path')
 const Ranvier = require('ranvier')
 const Config = Ranvier.Config
 
-// package.json for versioning
 const pkg = require('./package.json')
 
+// check Node version
 if (!semver.satisfies(process.version, pkg.engines.node)) {
   throw new Error(
-    `Ranvier's core engine requires Node version ${pkg.engines.node},
-    you are currently running Node ${process.version}.`
+    `Ranvier's core engine requires Node version ${pkg.engines.node}. You are currently running Node ${process.version}.`
   )
 }
 
-// wrapper for ranvier.json
+// set data path
 Ranvier.Data.setDataPath(path.join(__dirname, '/data/'))
+
+// check for ranvier.json
 if (fs.existsSync('./ranvier.conf.js')) {
   Config.load(require('./ranvier.conf.js'))
 } else if (fs.existsSync('./ranvier.json')) {
@@ -41,7 +41,7 @@ if (fs.existsSync('./ranvier.conf.js')) {
   process.exit(1)
 }
 
-// command line options
+// handle command line options
 commander
   .version(pkg.version)
   .option('-p, --port [portNumber]', 'Port to host the server [23]', Ranvier.Config.get('port', 23))
@@ -53,32 +53,36 @@ commander
 process.env.NODE_DEBUG = 'net'
 process.stdin.setEncoding('utf8')
 
+// initialize logging
 const Logger = Ranvier.Logger
 const logfile = Ranvier.Config.get('logfile')
 if (logfile) {
   Logger.setFileLogging(`${__dirname}/log/${logfile}`)
 }
 
+// configure logging errors
 if (commander.prettyErrors) {
   Logger.enablePrettyErrors()
 }
 
-// set logging level based on CLI option or environment variable
+// set logging level based on command line option or environment variable
 const logLevel = commander.verbose
   ? 'verbose'
   : process.env.LOG_LEVEL || Config.get('logLevel') || 'debug'
 Logger.setLevel(logLevel)
 
-// global state object, server instance and configurable intervals
+// initialize game state object and intervals
 let GameState = {}
 let tickInterval, playerTickInterval
 
 /**
- * Do the dirty work
+ * Initialize the Ranvier game server
+ * @async
+ * @param {boolean} startServer
  */
-async function init (restartServer) {
-  Logger.log('START - Loading entities')
-  restartServer = typeof restartServer === 'undefined' ? true : restartServer
+async function init (startServer) {
+  Logger.log('START - Initializing game state')
+  startServer = typeof startServer === 'undefined' ? true : startServer
 
   GameState = {
     AccountManager: new Ranvier.AccountManager(),
@@ -115,30 +119,33 @@ async function init (restartServer) {
     Config
   }
 
-  // set up entity loaders
+  // initialize data sources and entity loaders
   GameState.DataSourceRegistry.load(require, __dirname, Config.get('dataSources'))
   GameState.EntityLoaderRegistry.load(GameState.DataSourceRegistry, Config.get('entityLoaders'))
 
+  // set entity loaders
   GameState.AccountManager.setLoader(GameState.EntityLoaderRegistry.get('accounts'))
   GameState.PlayerManager.setLoader(GameState.EntityLoaderRegistry.get('players'))
 
-  // set up bundlemanager
+  // initialize BundleManager with bundles and game state
   const BundleManager = new Ranvier.BundleManager(path.join(__dirname, '/bundles/'), GameState)
   GameState.BundleManager = BundleManager
   await BundleManager.loadBundles()
   GameState.ServerEventManager.attach(GameState.GameServer)
 
-  if (restartServer) {
+  // handle server start
+  if (startServer) {
     Logger.log('START - Starting server')
     GameState.GameServer.startup(commander)
 
-    // ticks for effect processing and combat
+    // start entity ticks
     clearInterval(tickInterval)
     tickInterval = setInterval(() => {
       GameState.AreaManager.tickAll(GameState)
       GameState.ItemManager.tickAll()
     }, Config.get('entityTickFrequency', 100))
 
+    // start player ticks
     clearInterval(playerTickInterval)
     playerTickInterval = setInterval(() => {
       GameState.PlayerManager.emit('updateTick')
@@ -148,4 +155,3 @@ async function init (restartServer) {
 
 // START IT UP!
 init()
-// vim: set syn=javascript :

@@ -14,7 +14,7 @@
   "scripts": {
     "start": "node ./ranvier -v",
     "init": "node ./util/init-bundles.js",
-    "postinstall": "npm run install-bundle install-all && npm run update-bundle update-all",
+    "postinstall": "npm run install-bundle install-all && npm run update-bundle update-all && npm link ranvier",
     "update-bundle": "node ./util/update-bundle.js",
     "remove-bundle": "node ./util/remove-bundle.js",
     "install-bundle": "node ./util/install-bundle.js",
@@ -29,7 +29,7 @@
     "ranvier-datasource-file": "^1.0.3",
     "semver": "^5.6.0",
     "sprintf-js": "^1.0.3",
-    "sty": "",
+    "sty": "^0.6.1",
     "uuid": "^3.3.2",
     "winston": "^2.4.4"
   },
