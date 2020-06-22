@@ -1,0 +1,6 @@
+---
+command: quit
+body: |
+  Quit the game and close your connection. Your character and account will be saved first. Be warned: using this command will return you to the real world!
+related:
+- save
