@@ -1,0 +1,6 @@
+---
+command: teleport
+body: |
+  Instantly transport your character to a specified room or another player. Using this command without arguments will take you to and from your admin sanctum. Either way, anyone following you will stop doing so. The flair text for teleporting can be customized with the config command.
+related:
+- config
