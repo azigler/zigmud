@@ -1,7 +1,7 @@
 const { Broadcast: B } = require('ranvier')
 
 /**
- * Save the Player and Account
+ * Save the Player and their Account
  */
 module.exports = {
   usage: 'save',

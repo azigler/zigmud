@@ -1,6 +1,9 @@
 const { Broadcast: B } = require('ranvier')
 const ArgParser = require('./../../../lib/ArgParser')
 
+/**
+ * Ditch a Character so they no longer follow the Player
+ */
 module.exports = {
   usage: 'ditch <character>',
   aliases: ['unhitch'],
