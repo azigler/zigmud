@@ -3,8 +3,21 @@ const ArgParser = require('./../../../lib/ArgParser')
 
 module.exports = {
   usage: 'follow <character>',
+  aliases: ['unfollow'],
 
-  command: state => (arg, player) => {
+  command: state => (arg, player, arg0) => {
+    // handle unfollowing
+    if (arg0 === 'unfollow') {
+      // if following someone, stop following
+      if (player.following) {
+        stopFollowing(player)
+      // if not following anyone, reject command
+      } else {
+        B.sayAt(player, "You're not following anyone.")
+      }
+      return
+    }
+
     // if no argument provided, reject command
     if (!arg) {
       return B.sayAt(player, 'Follow whom?')
@@ -35,7 +48,7 @@ module.exports = {
         stopFollowing(player)
       // if not following anyone, reject command
       } else {
-        B.sayAt(player, 'Huh?')
+        B.sayAt(player, "You're not following anyone and you can't follow yourself.")
       }
       return
     }
