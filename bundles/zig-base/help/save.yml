@@ -3,4 +3,4 @@ command: save
 body: |
   Save your character and account. This command is called automatically before quitting. Your character and account are regularly saved through other means, but this command allows you to manually do so.
 related:
-- quit
+  - quit

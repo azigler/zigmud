@@ -1,0 +1,13 @@
+---
+command: get
+body: |
+  Get an item from a room or container. You can use the 'all' keyword to get all items from a source. Some items are irretrievable and cannot be picked up. You can also use the 'loot' alias to target a container and take all items from inside of it. You cannot use the 'loot' alias on a room or non-container item. To get an item, you must have sufficient space in your inventory.
+related:
+  - drop
+  - put
+  - give
+  - inventory
+keywords:
+  - take
+  - retrieve
+  - loot

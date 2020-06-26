@@ -3,4 +3,6 @@ command: follow
 body: |
   Start following a character as they move between rooms. Both players and NPCs can follow and be followed. You can stop following a character by targeting yourself, using the 'none' or 'stop' arguments, or using the 'unfollow' command. You cannot follow someone who is already following you and you can only follow one character at a time. If someone is following you, you can use the 'ditch' command to make them stop doing so.
 related:
-- ditch
+  - ditch
+keywords:
+  - unfollow

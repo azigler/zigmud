@@ -43,6 +43,13 @@ module.exports = {
       }
     }
 
+    // teleport to non-existent room for debugging purposes
+    if (argWords[0] === 'void') {
+      B.sayAt(player, `You ${arg0} ${flair}.\n`)
+      B.sayAtExcept(player.room, `${player.name} suddenly disappears ${flair}.`, [player])
+      player.moveTo(state.RoomManager.getRoom('void:void'))
+    }
+
     // determine if target is a room
     const isRoom = target.includes(':')
 
