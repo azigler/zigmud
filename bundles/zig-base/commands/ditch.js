@@ -50,7 +50,7 @@ module.exports = {
   }
 }
 
-// helper function to ditch a character
+// helper function for ditching a character
 function ditch (player, follower) {
   B.sayAt(player, `You ditch ${follower.name} and they stop following you.`)
   follower.unfollow()

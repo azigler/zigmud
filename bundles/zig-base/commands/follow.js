@@ -78,7 +78,7 @@ module.exports = {
   }
 }
 
-// helper function to stop following a character
+// helper function for stopping following a character
 function stopFollowing (player) {
   B.sayAt(player, `You stop following ${player.following.name}.`)
   // only announce stopping following if characters are in same room
