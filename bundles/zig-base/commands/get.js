@@ -118,9 +118,9 @@ module.exports = {
     // if no matching item found in specified source, reject command
     if (!item) {
       if (sourceType === 'room') {
-        return B.sayAt(player, `You don't see ${parts[0]} here.`)
+        return B.sayAt(player, "You don't see that here.")
       } if (sourceType === 'container') {
-        return B.sayAt(player, `You don't see ${parts[0]} in there.`)
+        return B.sayAt(player, "You don't see that in there.")
       }
     }
 
