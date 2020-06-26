@@ -160,19 +160,19 @@ function getItem (item, player, container, arg0) {
 
   /**
    * @event Item#get
-   * (currently unused)
+   // TODO: use event
    */
   item.emit('get', player)
 
   /**
    * @event Player#getItem
-   * (currently unused)
+   // TODO: use event
    */
   player.emit('getItem', item)
 
   /**
    * @event Room#itemRetrieved
-   * (currently unused)
+   // TODO: use event
    */
   player.room.emit('itemRetrieved', player, item)
 
@@ -180,7 +180,7 @@ function getItem (item, player, container, arg0) {
   for (const npc of player.room.npcs) {
     /**
      * @event Npc#itemRetrieved
-     * (currently unused)
+     // TODO: use event
      */
     npc.emit('itemRetrieved', player, item)
   }
