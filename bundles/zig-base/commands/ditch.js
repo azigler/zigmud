@@ -26,7 +26,7 @@ module.exports = {
       return player.followers.forEach(follower => {
         ditch(player, follower)
       })
-    // otherwise determine target from followers
+    // otherwise, determine target from followers
     } else {
       target = ArgParser.parseDot(args, player.followers)
     }
