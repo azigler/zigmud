@@ -6,6 +6,8 @@ const ArgParser = require('./../../../lib/ArgParser')
  *
  * @fires Item#get
  * @fires Player#getItem
+ * @fires Room#itemRetrieved
+ * @fires Npc#itemRetrieved
  */
 module.exports = {
   usage: 'get <item>/all [container]',
@@ -167,4 +169,19 @@ function getItem (item, player, container, arg0) {
    * (currently unused)
    */
   player.emit('getItem', item)
+
+  /**
+   * @event Room#itemRetrieved
+   * (currently unused)
+   */
+  player.room.emit('itemRetrieved', player, item)
+
+  // notify all NPCs in room
+  for (const npc of player.room.npcs) {
+    /**
+     * @event Npc#itemRetrieved
+     * (currently unused)
+     */
+    npc.emit('itemRetrieved', player, item)
+  }
 }
