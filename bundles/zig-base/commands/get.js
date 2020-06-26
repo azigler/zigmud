@@ -5,7 +5,7 @@ const ArgParser = require('./../../../lib/ArgParser')
  * Get an Item from the Room or a container
  *
  * @fires Item#get
- * @fires player#get
+ * @fires Player#getItem
  */
 module.exports = {
   usage: 'get <item>/all [container]',
@@ -163,8 +163,8 @@ function getItem (item, player, container, arg0) {
   item.emit('get', player)
 
   /**
-   * @event Player#get
+   * @event Player#getItem
    * (currently unused)
    */
-  player.emit('get', item)
+  player.emit('getItem', item)
 }
