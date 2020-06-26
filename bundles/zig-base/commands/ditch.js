@@ -8,9 +8,9 @@ module.exports = {
   usage: 'ditch <character>',
   aliases: ['unhitch'],
 
-  command: state => (arg, player, arg0) => {
+  command: state => (args, player, arg0) => {
     // if no argument provided, reject command
-    if (!arg) {
+    if (!args) {
       return B.sayAt(player, `${B.capitalize(arg0)} whom?`)
     }
 
@@ -22,19 +22,19 @@ module.exports = {
     let target
 
     // handle ditching all followers
-    if (arg === 'all') {
+    if (args === 'all') {
       return player.followers.forEach(follower => {
         ditch(player, follower)
       })
     // otherwise determine target from followers
     } else {
-      target = ArgParser.parseDot(arg, player.followers)
+      target = ArgParser.parseDot(args, player.followers)
     }
 
     // handle no target found
     if (!target) {
       // determine if any matching character is in same room as player
-      const matchingCharacter = ArgParser.parseDot(arg, player.room.players) || ArgParser.parseDot(arg, player.room.npcs)
+      const matchingCharacter = ArgParser.parseDot(args, player.room.players) || ArgParser.parseDot(args, player.room.npcs)
 
       // handle matching character exists
       if (matchingCharacter) {

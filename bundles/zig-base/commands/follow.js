@@ -8,7 +8,7 @@ module.exports = {
   usage: 'follow <character>',
   aliases: ['unfollow'],
 
-  command: state => (arg, player, arg0) => {
+  command: state => (args, player, arg0) => {
     // handle unfollowing
     if (arg0 === 'unfollow') {
       // if following someone, stop following
@@ -22,15 +22,15 @@ module.exports = {
     }
 
     // if no argument provided, reject command
-    if (!arg) {
+    if (!args) {
       return B.sayAt(player, 'Follow whom?')
     }
 
     // prioritize targeting players over NPCs
-    let target = ArgParser.parseDot(arg, player.room.players) || ArgParser.parseDot(arg, player.room.npcs)
+    let target = ArgParser.parseDot(args, player.room.players) || ArgParser.parseDot(args, player.room.npcs)
 
     if (!target) {
-      switch (arg) {
+      switch (args) {
         // handle special arguments
         case 'me':
         case 'self':
