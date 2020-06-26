@@ -31,7 +31,7 @@ module.exports = {
 
     // filter 'from' preposition from arguments
     // (e.g., 'get ball from bag' becomes 'get ball bag')
-    const parts = args.split(' ').filter(arg => !arg.match(/from/i))
+    const parts = args.split(' ').filter(arg => !arg.match(/\bfrom\b/i))
 
     // handle 'loot' as an alias for 'get all'
     if (arg0 === 'loot') {
