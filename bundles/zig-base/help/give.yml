@@ -1,0 +1,9 @@
+---
+command: give
+body: |
+  Give an item from your inventory to another character. You can use the 'all' keyword to give all items from your inventory to another character, provided they have enough inventory space. You can use the 'to' proposition with this command. By prefixing a number and period (e.g., 'give 3.ball to man'), you can target specific items with the same keyword. Not all NPCs can be given items and some NPCs only accept specific items.
+related:
+  - put
+  - get
+  - drop
+  - inventory

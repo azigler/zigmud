@@ -8,9 +8,10 @@ const ArgParser = require('./../../../lib/ArgParser')
  * @fires Player#getItem
  * @fires Room#itemRetrieved
  * @fires Npc#itemRetrieved
+ * @fires Item#itemRetrieved
  */
 module.exports = {
-  usage: 'get <item>/all [container]',
+  usage: 'get <item>/all [from] [container]',
   aliases: ['take', 'retrieve', 'loot'],
 
   command: (state) => (args, player, arg0) => {
@@ -153,9 +154,30 @@ function getItem (item, player, container, arg0) {
   if (container) {
     B.sayAt(player, `You ${arg0} ${item.name} from ${container.name}.`)
     B.sayAtExcept(player.room, `${player.name} ${arg0}s ${item.name} from ${container.name}.`, [player])
+
+    /**
+     * @event Item#itemRetrieved
+     // TODO: use event
+    */
+    container.emit('itemRetrieved', player, item)
   } else {
     B.sayAt(player, `You get ${item.name}.`)
     B.sayAtExcept(player.room, `${player.name} ${arg0}s ${item.name}.`, [player])
+
+    /**
+     * @event Room#itemRetrieved
+     // TODO: use event
+    */
+    player.room.emit('itemRetrieved', player, item)
+
+    // notify all NPCs in room
+    for (const npc of player.room.npcs) {
+      /**
+       * @event Npc#itemRetrieved
+       // TODO: use event
+      */
+      npc.emit('itemRetrieved', player, item)
+    }
   }
 
   /**
@@ -169,19 +191,4 @@ function getItem (item, player, container, arg0) {
    // TODO: use event
    */
   player.emit('getItem', item)
-
-  /**
-   * @event Room#itemRetrieved
-   // TODO: use event
-   */
-  player.room.emit('itemRetrieved', player, item)
-
-  // notify all NPCs in room
-  for (const npc of player.room.npcs) {
-    /**
-     * @event Npc#itemRetrieved
-     // TODO: use event
-     */
-    npc.emit('itemRetrieved', player, item)
-  }
 }
