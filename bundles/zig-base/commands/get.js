@@ -161,7 +161,7 @@ function getItem (item, player, container, arg0) {
     */
     container.emit('itemRetrieved', player, item)
   } else {
-    B.sayAt(player, `You get ${item.name}.`)
+    B.sayAt(player, `You ${arg0} ${item.name}.`)
     B.sayAtExcept(player.room, `${player.name} ${arg0}s ${item.name}.`, [player])
 
     /**
