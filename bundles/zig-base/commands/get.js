@@ -152,10 +152,10 @@ function getItem (item, player, container, arg0) {
   // announce getting item
   if (container) {
     B.sayAt(player, `You ${arg0} ${item.name} from ${container.name}.`)
-    B.sayAtExcept(player.room, B.capitalize(`${player.name} ${arg0}s ${item.name} from ${container.name}.`), [player])
+    B.sayAtExcept(player.room, `${player.name} ${arg0}s ${item.name} from ${container.name}.`, [player])
   } else {
     B.sayAt(player, `You get ${item.name}.`)
-    B.sayAtExcept(player.room, B.capitalize(`${player.name} ${arg0}s ${item.name}.`), [player])
+    B.sayAtExcept(player.room, `${player.name} ${arg0}s ${item.name}.`, [player])
   }
 
   /**
