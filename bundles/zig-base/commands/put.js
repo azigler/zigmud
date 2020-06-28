@@ -56,10 +56,8 @@ module.exports = {
             item = item[1]
           }
 
-          // if container's inventory is full, stop
-          if (toContainer.isInventoryFull()) {
-            return B.sayAt(player, `${B.capitalize(toContainer.name)} is full.`)
-          }
+          // if container's inventory is full, reject command
+          if (checkInventoryFull(item, player, toContainer, arg0)) return
 
           // put item
           putItem(item, player, toContainer, arg0)
@@ -92,10 +90,8 @@ module.exports = {
       return B.sayAt(player, `${toContainer.name} is closed.`)
     }
 
-    // if destination container is full, reject command
-    if (toContainer.isInventoryFull()) {
-      return B.sayAt(player, `${B.capitalize(toContainer.name)} is full.`)
-    }
+    // if destination container's inventory is full, reject command
+    if (checkInventoryFull(item, player, toContainer, arg0)) return
 
     putItem(item, player, toContainer, arg0)
   }
@@ -130,4 +126,16 @@ function putItem (item, player, container, arg0) {
    // TODO: use event
   */
   container.emit('itemPut', player, item)
+}
+
+// helper function for checking if container's inventory is full
+function checkInventoryFull (item, player, container, arg0) {
+  // if container's inventory is full, stop
+  if (container.isInventoryFull()) {
+    B.sayAt(player, `You try to ${arg0} ${item.name} in${arg0 === 'stow' ? '' : 'to'} ${container.name} but it's full.`)
+    B.sayAtExcept(player.room, `${player.name} tries to ${arg0} ${item.name} in${arg0 === 'stow' ? '' : 'to'} ${container.name} but it's full.`, [player])
+    return true
+  } else {
+    return false
+  }
 }

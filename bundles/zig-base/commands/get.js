@@ -25,11 +25,6 @@ module.exports = {
       return B.sayAt(player, `You are unable to ${arg0} anything here.`)
     }
 
-    // if player's inventory is full, reject command
-    if (player.isInventoryFull()) {
-      return B.sayAt(player, 'Your inventory is full.')
-    }
-
     // filter 'from' preposition from arguments
     // (e.g., 'get ball from bag' becomes 'get ball bag')
     const parts = args.split(' ').filter(arg => !arg.match(/\bfrom\b/i))
@@ -104,9 +99,7 @@ module.exports = {
         }
 
         // if player's inventory is full, stop
-        if (player.isInventoryFull()) {
-          return B.sayAt(player, 'Your inventory is full.')
-        }
+        if (checkInventoryFull(item, player, container, sourceType)) return
 
         // get item
         getItem(item, player, container, arg0)
@@ -117,6 +110,9 @@ module.exports = {
 
     // search for item in source
     const item = ArgParser.parseDot(targetItem, source)
+
+    // if player's inventory is full, reject command
+    if (checkInventoryFull(item, player, container, sourceType)) return
 
     // if no matching item found in specified source, reject command
     if (!item) {
@@ -191,4 +187,22 @@ function getItem (item, player, container, arg0) {
    // TODO: use event
    */
   player.emit('getItem', item)
+}
+
+// helper function for checking if player's inventory is full
+function checkInventoryFull (item, player, container, sourceType) {
+  // if recipient's inventory is full, stop
+  if (player.isInventoryFull()) {
+    if (sourceType === 'room') {
+      B.sayAt(player, `You try to get ${item.name} but your inventory is full.`)
+      B.sayAtExcept(player.room, `${player.name} tries to get ${item.name} but their inventory is full.`, [player])
+      return true
+    } if (sourceType === 'container') {
+      B.sayAt(player, `You try to get ${item.name} from ${container.name} but your inventory is full.`)
+      B.sayAtExcept(player.room, `${player.name} tries to get ${item.name} from ${container.name}, but their inventory is full.`, [player])
+      return true
+    }
+  } else {
+    return false
+  }
 }

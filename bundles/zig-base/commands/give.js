@@ -155,7 +155,7 @@ function giveItem (targetItem, player, target) {
   target.emit('givenItem', targetItem, player)
 }
 
-// helper function for checking if character's inventory is full
+// helper function for checking if player's inventory is full
 function checkInventoryFull (targetItem, player, target) {
   // if recipient's inventory is full, stop
   if (target.isInventoryFull()) {
