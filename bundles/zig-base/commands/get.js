@@ -101,7 +101,6 @@ module.exports = {
         // if player's inventory is full, stop
         if (checkInventoryFull(item, player, container, sourceType)) return
 
-        // get item
         getItem(item, player, container, arg0)
       }
 
@@ -123,7 +122,6 @@ module.exports = {
       }
     }
 
-    // get item
     getItem(item, player, container, arg0)
   }
 }

@@ -129,7 +129,7 @@ function giveItem (targetItem, player, target) {
   // add the item to recipient
   target.addItem(targetItem)
 
-  // announce gving item
+  // announce giving item
   B.sayAt(player, `You give ${targetItem.name} to ${target.name}.`)
   B.sayAtExcept(player.room, B.capitalize(`${player.name} gives ${targetItem.name} to ${target.name}.`), [player, target])
   if (!target.isNpc) {

@@ -37,7 +37,7 @@ module.exports = {
       return B.sayAt(player, `${B.capitalize(arg0)} all where?`)
     // otherwise, reject command because item not found
     } else if (parts.length === 1) {
-      return B.sayAt(player, "You don't have that.")
+      return B.sayAt(player, "That isn't in your inventory.")
     }
 
     // determine the destination container
@@ -72,7 +72,11 @@ module.exports = {
 
     // if item not found, reject command
     if (!item) {
-      return B.sayAt(player, `${B.capitalize(arg0)} what in ${toContainer.name}?`)
+      if (toContainer) {
+        return B.sayAt(player, `${B.capitalize(arg0)} what in ${toContainer.name}?`)
+      } else {
+        return B.sayAt(player, `${B.capitalize(arg0)} what in what?`)
+      }
     }
 
     // if destination container not found, reject command
