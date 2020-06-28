@@ -4,5 +4,3 @@ body: |
   Ditch a character so they no longer follow you as you move between moves. You can ditch everyone following you with the 'all' argument.
 related:
   - follow
-keywords:
-  - unhitch

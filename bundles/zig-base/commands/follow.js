@@ -6,7 +6,6 @@ const ArgParser = require('./../../../lib/ArgParser')
  */
 module.exports = {
   usage: 'follow <character>',
-  aliases: ['unfollow'],
 
   command: state => (args, player, arg0) => {
     // handle unfollowing

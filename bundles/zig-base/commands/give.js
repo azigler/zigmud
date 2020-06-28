@@ -90,11 +90,23 @@ module.exports = {
 
     // if giving all items from inventory to another player
     if (all) {
-      // if player has items, attempt giving each to NPC
+      // if player has items, attempt giving each to other player
       if (player.inventory.size > 0) {
-        player.inventory.forEach(function (value) {
-          giveItem(value, player, target)
-        })
+        for (let item of player.inventory) {
+          // handle if inventory is a Set
+          if (Array.isArray(item)) {
+            item = item[1]
+          }
+
+          // if target's inventory is full, stop
+          if (checkInventoryFull(item, player, target)) {
+            return
+          }
+
+          // give item
+          giveItem(item, player, target)
+        }
+
       // otherwise, announce there's nothing to give
       } else {
         return B.sayAt(player, "There's nothing in your inventory.")
@@ -102,22 +114,15 @@ module.exports = {
       return
     }
 
-    giveItem(targetItem, player, target)
+    // if recipient's inventory is full, stop
+    if (!checkInventoryFull(targetItem, player, target)) {
+      giveItem(targetItem, player, target)
+    }
   }
 }
 
 // helper function for giving an item
 function giveItem (targetItem, player, target) {
-  // if recipient's inventory is full, stop
-  if (target.isInventoryFull()) {
-    B.sayAt(player, `You try to give ${targetItem.name} to ${target.name}, but they can't carry any more.`)
-    B.sayAtExcept(player.room, `${player.name} tries to give ${targetItem.name} to ${target.name}, but they can't carry any more.`, [player, target])
-    if (!target.isNpc) {
-      B.sayAt(target, `${player.name} tries to give ${targetItem.name} to you, but you can't carry any more.`)
-    }
-    return
-  }
-
   // remove item from player
   player.removeItem(targetItem)
 
@@ -148,4 +153,19 @@ function giveItem (targetItem, player, target) {
    // TODO: use event
   */
   target.emit('givenItem', targetItem, player)
+}
+
+// helper function for checking if character's inventory is full
+function checkInventoryFull (targetItem, player, target) {
+  // if recipient's inventory is full, stop
+  if (target.isInventoryFull()) {
+    B.sayAt(player, `You try to give ${targetItem.name} to ${target.name}, but their inventory is full.`)
+    B.sayAtExcept(player.room, `${player.name} tries to give ${targetItem.name} to ${target.name}, but their inventory is full.`, [player, target])
+    if (!target.isNpc) {
+      B.sayAt(target, `${player.name} tries to give ${targetItem.name} to you, but your inventory is full.`)
+    }
+    return true
+  } else {
+    return false
+  }
 }

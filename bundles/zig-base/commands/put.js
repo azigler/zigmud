@@ -48,12 +48,24 @@ module.exports = {
 
     // if putting all items from inventory into container
     if (parts[0] === 'all') {
-      // if player has items, put them in container
+      // if player has items, attempt putting each in container
       if (player.inventory.size > 0) {
-        player.inventory.forEach(function (value) {
-          putItem(value, player, toContainer, arg0)
-        })
-        // otherwise, announce there's nothing to put
+        for (let item of player.inventory) {
+          // handle if inventory is a Set
+          if (Array.isArray(item)) {
+            item = item[1]
+          }
+
+          // if container's inventory is full, stop
+          if (toContainer.isInventoryFull()) {
+            return B.sayAt(player, `${B.capitalize(toContainer.name)} is full.`)
+          }
+
+          // put item
+          putItem(item, player, toContainer, arg0)
+        }
+
+      // otherwise, announce there's nothing to put
       } else {
         return B.sayAt(player, "There's nothing in your inventory.")
       }
