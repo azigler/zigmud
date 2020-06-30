@@ -19,11 +19,6 @@ module.exports = {
       return B.sayAt(player, `${B.capitalize(arg0)} what?`)
     }
 
-    // if player isn't in a room, reject command
-    if (!player.room) {
-      return B.sayAt(player, `You are unable to ${arg0} anything here.`)
-    }
-
     // if dropping all items in inventory
     if (args === 'all') {
       // if player has items, drop them

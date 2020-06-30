@@ -20,11 +20,6 @@ module.exports = {
       return B.sayAt(player, `${B.capitalize(arg0)} what?`)
     }
 
-    // if player isn't in a room, reject command
-    if (!player.room) {
-      return B.sayAt(player, `You are unable to ${arg0} anything here.`)
-    }
-
     // filter 'from' preposition from arguments
     // (e.g., 'get ball from bag' becomes 'get ball bag')
     const parts = args.split(' ').filter(arg => !arg.match(/\bfrom\b/i))

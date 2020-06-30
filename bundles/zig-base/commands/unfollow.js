@@ -1,5 +1,6 @@
 /**
- * Follow a Character
+ * Unfollow a Character
+ * Handled by 'follow' command
  */
 module.exports = {
   usage: 'unfollow',

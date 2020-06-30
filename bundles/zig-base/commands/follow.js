@@ -3,6 +3,7 @@ const ArgParser = require('./../../../lib/ArgParser')
 
 /**
  * Follow a Character
+ * Handles 'unfollow' command
  */
 module.exports = {
   usage: 'follow <character>',
