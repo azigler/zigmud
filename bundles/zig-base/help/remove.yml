@@ -1,0 +1,8 @@
+---
+command: remove
+body: |
+  Remove a worn item and put it in your inventory. You can target either the item or its slot with this command. You cannot remove an item if your inventory is full. You can remove everything you have equipped with the 'all' argument, provided you have sufficient space in your inventory. By prefixing a number and period (e.g., 'remove 3.ring'), you can target specific items with the same keyword.
+related:
+  - wear
+  - equipment
+  - inventory

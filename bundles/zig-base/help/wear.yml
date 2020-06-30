@@ -1,0 +1,8 @@
+---
+command: wear
+body: |
+  Wear an item from your inventory. Not all items can be worn. Each worn item occupies an equipment slot, though some may have multiple slot options. You can designate a specific slot in which to wear an item by appending the slot to the command (with or without the 'on' preposition). You can attempt to wear all items in your inventory with the 'all' argument. You cannot wear two items in the same slot. By prefixing a number and period (e.g., 'wear 3.ring'), you can target specific items with the same keyword.
+related:
+  - remove
+  - equipment
+  - inventory
