@@ -26,7 +26,7 @@ module.exports = {
     const source = player.inventory
 
     // search for item in player's inventory
-    const item = ArgParser.parseDot(parts[0], source)
+    const item = ArgParser.parseDot(parts[0], [...source].reverse())
 
     // if item found but no container provided, reject command
     if (parts.length === 1 && item) {
@@ -41,9 +41,9 @@ module.exports = {
     }
 
     // determine the destination container
-    // check newest containers in room first
+    // check newest containers in room and player inventory first
     const toContainer = ArgParser.parseDot(parts[1], [...player.room.items].reverse()) ||
-                        ArgParser.parseDot(parts[1], player.inventory) ||
+                        ArgParser.parseDot(parts[1], [...player.inventory].reverse()) ||
                         ArgParser.parseDot(parts[1], player.equipment)
 
     // if putting all items from inventory into container

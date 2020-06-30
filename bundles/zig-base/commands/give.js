@@ -31,7 +31,8 @@ module.exports = {
       all = true
     } else {
       // determine matching item to give from player's inventory
-      targetItem = ArgParser.parseDot(targetItem, player.inventory)
+      // prioritize newest items
+      targetItem = ArgParser.parseDot(targetItem, [...player.inventory].reverse())
     }
 
     // if player doesn't have matching item in inventory, reject command

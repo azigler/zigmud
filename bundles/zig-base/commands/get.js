@@ -55,9 +55,9 @@ module.exports = {
     // (e.g., 'get ball bag')
     } else {
       // find container in room, inventory, or equipment
-      // check newest containers in room first
+      // check newest containers in room and player inventory first
       container = ArgParser.parseDot(parts[1], [...player.room.items].reverse()) ||
-                  ArgParser.parseDot(parts[1], player.inventory) ||
+                  ArgParser.parseDot(parts[1], [...player.inventory].reverse()) ||
                   ArgParser.parseDot(parts[1], player.equipment)
 
       // if no container found, reject command

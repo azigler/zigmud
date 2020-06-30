@@ -38,7 +38,8 @@ module.exports = {
     // otherwise, drop specified item
     } else {
       // search for item to drop
-      const item = ArgParser.parseDot(args, player.inventory)
+      // prioritize newest items
+      const item = ArgParser.parseDot(args, [...player.inventory].reverse())
       dropItem(item, player, arg0)
     }
   }
