@@ -26,7 +26,7 @@ module.exports = {
     const [itemArg, slotArg] = args.split(' ').filter(arg => !arg.match(/\bon\b/i))
 
     // if attempting to wear all items in inventory
-    if (itemArg === 'all') {
+    if (itemArg.match(/\b^all\b/i)) {
       // if player has items, attempt wearing each
       if (player.inventory.size > 0) {
         for (let item of player.inventory) {

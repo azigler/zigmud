@@ -20,7 +20,7 @@ module.exports = {
     }
 
     // if dropping all items in inventory
-    if (args === 'all') {
+    if (args.match(/\b^all\b/i)) {
       // if player has items, drop them
       if (player.inventory.size > 0) {
         player.inventory.forEach(function (value) {

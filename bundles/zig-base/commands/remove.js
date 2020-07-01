@@ -15,7 +15,7 @@ module.exports = {
     }
 
     // if attempting to remove all items
-    if (args === 'all') {
+    if (args.match(/\b^all\b/i)) {
       // if player is wearing, attempt removing each
       if (player.equipment.size > 0) {
         for (let [slot, item] of player.equipment) {

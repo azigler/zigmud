@@ -33,7 +33,7 @@ module.exports = {
       return B.sayAt(player, `${B.capitalize(arg0)} ${item.name} where?`)
     }
     // handle special message for 'all' argument
-    if (parts.length === 1 && parts[0].toLowerCase() === 'all') {
+    if (parts.length === 1 && parts[0].match(/\b^all\b/i)) {
       return B.sayAt(player, `${B.capitalize(arg0)} all where?`)
     // otherwise, reject command because item not found
     } else if (parts.length === 1) {
@@ -47,7 +47,7 @@ module.exports = {
                         ArgParser.parseDot(parts[1], player.equipment)
 
     // if putting all items from inventory into container
-    if (parts[0] === 'all') {
+    if (parts[0].match(/\b^all\b/i)) {
       // if player has items, attempt putting each in container
       if (player.inventory.size > 0) {
         for (let item of player.inventory) {
@@ -56,11 +56,9 @@ module.exports = {
             item = item[1]
           }
 
-          // if container's inventory is full, reject command
-          if (checkInventoryFull(item, player, toContainer, arg0)) return
-
-          // put item
-          putItem(item, player, toContainer, arg0)
+          if (checkPutting(item, player, toContainer, arg0)) {
+            putItem(item, player, toContainer, arg0)
+          }
         }
 
       // otherwise, announce there's nothing to put
@@ -79,25 +77,9 @@ module.exports = {
       }
     }
 
-    // if destination container not found, reject command
-    if (!toContainer) {
-      return B.sayAt(player, `Where do you want to ${arg0} ${item.name}?`)
+    if (checkPutting(item, player, toContainer, arg0)) {
+      putItem(item, player, toContainer, arg0)
     }
-
-    // if targeted destination container isn't a container, reject command
-    if (toContainer.type !== ItemType.CONTAINER) {
-      return B.sayAt(player, `${toContainer.name} isn't a container.`)
-    }
-
-    // if destination container is closed, reject command
-    if (toContainer.closed) {
-      return B.sayAt(player, `${toContainer.name} is closed.`)
-    }
-
-    // if destination container's inventory is full, reject command
-    if (checkInventoryFull(item, player, toContainer, arg0)) return
-
-    putItem(item, player, toContainer, arg0)
   }
 }
 
@@ -142,4 +124,30 @@ function checkInventoryFull (item, player, container, arg0) {
   } else {
     return false
   }
+}
+
+// helper function for checking if item can be put in container
+function checkPutting (item, player, toContainer, arg0) {
+  // if targeted destination container isn't a container, reject command
+  if (toContainer.type !== ItemType.CONTAINER) {
+    B.sayAt(player, `${B.capitalize(toContainer.name)} isn't a container.`)
+    return false
+  }
+
+  // if item and destination container are the same, reject command
+  if (toContainer.uuid === item.uuid) {
+    B.sayAt(player, `You can't put ${toContainer.name} inside of itself.`)
+    return false
+  }
+
+  // if destination container is closed, reject command
+  if (toContainer.closed) {
+    B.sayAt(player, `${B.capitalize(toContainer.name)} is closed.`)
+    return false
+  }
+
+  // if container's inventory is full, reject command
+  if (checkInventoryFull(item, player, toContainer, arg0)) return false
+
+  return true
 }

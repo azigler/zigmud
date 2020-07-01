@@ -26,7 +26,7 @@ module.exports = {
 
     // handle 'loot' as an alias for 'get all'
     if (arg0 === 'loot') {
-      if (parts[0] !== 'all') {
+      if (!parts[0].match(/\b^all\b/i)) {
         parts.unshift('all')
       // if no target container provided, reject command
       } if (parts.length === 1) {
@@ -76,7 +76,7 @@ module.exports = {
     }
 
     // if getting all items from source
-    if (targetItem === 'all') {
+    if (targetItem.match(/\b^all\b/i)) {
       // if no source from which to retrieve items, reject command
       if (!source || ![...source].length) {
         if (sourceType === 'room') {

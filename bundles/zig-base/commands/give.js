@@ -27,7 +27,7 @@ module.exports = {
     }
 
     let all = false
-    if (targetItem === 'all') {
+    if (targetItem.match(/\b^all\b/i)) {
       all = true
     } else {
       // determine matching item to give from player's inventory

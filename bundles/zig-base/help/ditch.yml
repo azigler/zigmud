@@ -1,6 +1,6 @@
 ---
 command: ditch
 body: |
-  Ditch a character so they no longer follow you as you move between moves. You can ditch everyone following you with the 'all' argument.
+  Ditch a character so they no longer follow you as you move between moves. You can ditch everyone following you with the 'all' argument. By prefixing a number and period (e.g., 'ditch 3.man'), you can target specific characters with the same keyword.
 related:
   - follow
