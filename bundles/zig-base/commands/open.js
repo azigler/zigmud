@@ -72,6 +72,12 @@ function handleDoor (player, doorRoom, targetRoom, door, exit, arg0, state) {
           B.sayAt(player, `You open the ${exit} exit.`)
           B.sayAtExcept(player.room, `${player.name} opens the ${exit} exit.`, [player])
           doorRoom.unlockDoor(targetRoom)
+          if (targetRoom !== player.room) {
+            B.sayAtExcept(targetRoom, `Someone opens the ${exit} exit from the other side.`, [player])
+          }
+          if (doorRoom !== player.room) {
+            B.sayAtExcept(doorRoom, `Someone opens the ${exit} exit from the other side.`, [player])
+          }
           return doorRoom.openDoor(targetRoom)
         }
         B.sayAtExcept(player.room, `${player.name} tries to open the ${exit} exit in vain.`, [player])
@@ -80,6 +86,12 @@ function handleDoor (player, doorRoom, targetRoom, door, exit, arg0, state) {
       if (door.closed) {
         B.sayAt(player, `You open the ${exit} exit.`)
         B.sayAtExcept(player.room, `${player.name} opens the ${exit} exit.`, [player])
+        if (targetRoom !== player.room) {
+          B.sayAtExcept(targetRoom, `Someone opens the ${exit} exit from the other side.`, [player])
+        }
+        if (doorRoom !== player.room) {
+          B.sayAtExcept(doorRoom, `Someone opens the ${exit} exit from the other side.`, [player])
+        }
         return doorRoom.openDoor(targetRoom)
       } else {
         return B.sayAt(player, `The ${exit} exit is not closed.`)
@@ -92,6 +104,12 @@ function handleDoor (player, doorRoom, targetRoom, door, exit, arg0, state) {
       }
       B.sayAt(player, `You close the ${exit} exit.`)
       B.sayAtExcept(player.room, `${player.name} closes the ${exit} exit.`, [player])
+      if (targetRoom !== player.room) {
+        B.sayAtExcept(targetRoom, `Someone closes the ${exit} exit from the other side.`, [player])
+      }
+      if (doorRoom !== player.room) {
+        B.sayAtExcept(doorRoom, `Someone closes the ${exit} exit from the other side.`, [player])
+      }
       return doorRoom.closeDoor(targetRoom)
     }
     // if player is trying to lock the door
@@ -107,7 +125,12 @@ function handleDoor (player, doorRoom, targetRoom, door, exit, arg0, state) {
       }
       B.sayAt(player, `You lock the ${exit} exit with ${playerKey.name}.`)
       B.sayAtExcept(player.room, `${player.name} locks the ${exit} exit with ${playerKey.name}.`, [player])
-
+      if (targetRoom !== player.room) {
+        B.sayAtExcept(targetRoom, `Someone locks the ${exit} exit from the other side.`, [player])
+      }
+      if (doorRoom !== player.room) {
+        B.sayAtExcept(doorRoom, `Someone locks the ${exit} exit from the other side.`, [player])
+      }
       return doorRoom.lockDoor(targetRoom)
     }
     // if player is trying to unlock the door
@@ -118,6 +141,12 @@ function handleDoor (player, doorRoom, targetRoom, door, exit, arg0, state) {
         } else {
           B.sayAt(player, `You unlock the ${exit} exit with ${playerKey.name}.`)
           B.sayAtExcept(player.room, `${player.name} unlocks the ${exit} exit with ${playerKey.name}.`, [player])
+          if (targetRoom !== player.room) {
+            B.sayAtExcept(targetRoom, `Someone unlocks the ${exit} exit from the other side.`, [player])
+          }
+          if (doorRoom !== player.room) {
+            B.sayAtExcept(doorRoom, `Someone unlocks the ${exit} exit from the other side.`, [player])
+          }
           return doorRoom.unlockDoor(targetRoom)
         }
       }
