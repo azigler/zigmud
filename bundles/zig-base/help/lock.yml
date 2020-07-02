@@ -1,0 +1,8 @@
+---
+command: lock
+body: |
+  Lock an unlocked container or door, provided you have the required key. Not every container or door can be locked. Locking something that is open will close it first. You can include the 'door' keyword before the exit direction, but it's not required.
+related:
+  - unlock
+  - open
+  - close
