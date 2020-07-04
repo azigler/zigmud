@@ -1,0 +1,13 @@
+---
+channel: ooc
+body: |
+  Send an OOC message to all connected players.
+related:
+  - tell
+  - whisper
+  - yell
+  - say
+  - gtell
+keywords:
+  - .
+  - chat

@@ -12,7 +12,7 @@ module.exports = {
     state.CommandManager.get('save').execute('', player)
 
     // announce to server
-    state.ChannelManager.get('chat').send(state, B.getSystemReporter(), `${player.name} has logged out.`)
+    state.ChannelManager.get('chat').send(state, B.getSystemReporter(), `${player.name} has logged off.`)
     Logger.log(`${player.name} has quit`)
 
     // announce to player and room

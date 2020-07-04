@@ -1,0 +1,13 @@
+---
+channel: gtell
+body: |
+  Send a message to everyone in your group that has a communicator item, regardless of being in the same room. Other players in your room will see and hear you communicating to your group, but they won't hear any responses unless they're also in your group.
+related:
+  - group
+  - tell
+  - whisper
+  - yell
+  - ooc
+  - say
+keywords:
+  - ptell

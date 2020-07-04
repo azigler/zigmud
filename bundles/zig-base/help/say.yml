@@ -1,0 +1,12 @@
+---
+channel: say
+body: |
+  Say something that is heard by all characters in your room.
+related:
+  - tell
+  - whisper
+  - yell
+  - ooc
+  - gtell
+keywords:
+  - "'"

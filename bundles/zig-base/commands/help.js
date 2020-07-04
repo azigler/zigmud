@@ -45,7 +45,7 @@ module.exports = {
 
     // if player has insufficient role, reject command
     if (hfile.command && state.CommandManager.get(hfile.command).requiredRole > player.role) {
-      return noHelpfile(player)
+      return noHelpfile(player, args)
     }
 
     // attempt displaying helpfile
@@ -62,7 +62,7 @@ module.exports = {
 
 // helper function for displaying a helpfile
 function render (state, hfile) {
-  let body = hfile.body.trim()
+  const body = hfile.body.trim()
   const name = hfile.name
 
   // helper function for formatting header text
@@ -87,16 +87,17 @@ function render (state, hfile) {
 
       if (actualCommand.aliases && actualCommand.aliases.length > 0) {
         header += nl
-        header += formatHeaderItem(' Aliases', actualCommand.aliases.join(', '))
+        header += formatHeaderItem('Aliases', actualCommand.aliases.join(', '))
       }
 
       header += nl
     }
   // handle helpfile for a channel
   } else if (hfile.channel) {
-    header += formatHeaderItem('Syntax', state.ChannelManager.get(hfile.channel).getUsage())
+    const chan = state.ChannelManager.get(hfile.channel)
+    header += formatHeaderItem('Syntax', chan.getUsage()) + nl
+    if (chan.aliases && chan.aliases.length > 0) header += formatHeaderItem('Alias', chan.aliases.join(', '))
     header += nl
-    body = state.ChannelManager.get(hfile.channel).description
   }
 
   let footer = bar
