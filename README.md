@@ -1,4 +1,4 @@
-# zigmud
+# zigMUD
 
 > Experimental fork of [RanvierMUD/trpg-skeleton](https://github.com/RanvierMUD/trpg-skeleton) powered by an experimental fork of [RanvierMUD/core](https://github.com/azigler/core)
 

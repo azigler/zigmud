@@ -1,0 +1,8 @@
+---
+command: whereinvis
+body: |
+  Toggle off your visibility on the where list. To toggle it on, use the 'wherevis' command. This command will also make you invisible on the who list. To show anonymously on the where list, use the 'whereanon' command. To view the where list, use the 'where' command. By default, you are visible on the where list.
+related:
+  - where
+  - wherevis
+  - whereanon

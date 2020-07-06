@@ -122,25 +122,25 @@ module.exports = [
     formatter: {
       sender: function (sender, target, message, colorify) {
         if (sender.role >= PlayerRoles.ADMIN) {
-          return `<b><red>[OOC] Admin ${sender.name}: "${message}"</red></b>`
+          return `<b><red>[OOC] Admin ${sender.name}: ${message}</red></b>`
         }
         if (sender.role >= PlayerRoles.BUILDER) {
-          return `<b><cyan>[OOC] Builder ${sender.name}: "${message}"</cyan></b>`
+          return `<b><cyan>[OOC] Builder ${sender.name}: ${message}</cyan></b>`
         }
-        return colorify(`[OOC] ${sender.name}: "${message}"`)
+        return colorify(`[OOC] ${sender.name}: ${message}`)
       },
 
       target: function (sender, target, message, colorify) {
         if (sender.name === 'SYSTEM') {
-          return `<b><magenta>${message}</magenta></b>`
+          return colorify(message)
         }
         if (sender.role >= PlayerRoles.ADMIN) {
-          return `<b><red>[OOC] Admin ${sender.name}: "${message}"</red></b>`
+          return `<b><red>[OOC] Admin ${sender.name}: ${message}</red></b>`
         }
         if (sender.role >= PlayerRoles.BUILDER) {
-          return `<b><cyan>[OOC] Builder ${sender.name}: "${message}"</cyan></b>`
+          return `<b><cyan>[OOC] Builder ${sender.name}: ${message}</cyan></b>`
         }
-        return colorify(`[OOC] ${sender.name}: "${message}"`)
+        return colorify(`[OOC] ${sender.name}: ${message}`)
       }
     }
   }),
@@ -153,11 +153,14 @@ module.exports = [
     audience: new RoleAudience({ minRole: PlayerRoles.ADMIN }),
     formatter: {
       sender: function (sender, target, message, colorify) {
-        return colorify(`[ADMIN] ${sender.name}: "${message}"`)
+        return colorify(`[ADMIN] ${sender.name}: ${message}`)
       },
 
       target: function (sender, target, message, colorify) {
-        return colorify(`[ADMIN] ${sender.name}: "${message}"`)
+        if (sender.name === 'SYSTEM') {
+          return colorify(message)
+        }
+        return colorify(`[ADMIN] ${sender.name}: ${message}`)
       }
     }
   }),
@@ -170,11 +173,14 @@ module.exports = [
     audience: new RoleAudience({ minRole: PlayerRoles.BUILDER }),
     formatter: {
       sender: function (sender, target, message, colorify) {
-        return colorify(`[BUILDER] ${sender.name}: "${message}"`)
+        return colorify(`[BUILDER] ${sender.name}: ${message}`)
       },
 
       target: function (sender, target, message, colorify) {
-        return colorify(`[BUILDER] ${sender.name}: "${message}"`)
+        if (sender.name === 'SYSTEM') {
+          return colorify(message)
+        }
+        return colorify(`[BUILDER] ${sender.name}: ${message}`)
       }
     }
   })

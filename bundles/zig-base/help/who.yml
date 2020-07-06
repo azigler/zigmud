@@ -1,0 +1,9 @@
+---
+command: who
+body: |
+  Display a list of connected players and their who titles. Some players may be hidden from the list and only represented in the count at the bottom. To toggle your own visibility on the who list, use the 'vis' argument or the separate 'whovis' and 'whoinvis' commands. You can set your own who title with the 'title' argument and your desired title or by using the separate 'whotitle' command. By default, you have no who title and are visible on the who list. Toggling yourself invisible on the who list also makes you invisible on the where list. 
+related:
+  - whovis
+  - whoinvis
+  - whotitle
+  - where

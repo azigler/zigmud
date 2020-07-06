@@ -1,0 +1,9 @@
+---
+command: where
+body: |
+  Display a list of rooms with players. Some players may be hidden from displaying. If a player is anonymous, you will only see a count representing that player in the room. To toggle your own visibility on the where list, use the 'vis' or 'anon' arguments or the separate 'wherevis', 'whereinvis', and 'whereanon' commands. By default, you are visible on the where list. Becoming invisible on the where list will also make you invisible on the who list. 
+related:
+  - wherevis
+  - whereinvis
+  - whereanon
+  - who

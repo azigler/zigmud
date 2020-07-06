@@ -1,0 +1,8 @@
+---
+command: whoinvis
+body: |
+  Toggle off your visibility on the who list. To toggle it on, use the 'whovis' command. To view the who list, use the 'who' command. Toggling yourself invisible on the who list also makes you invisible on the where list. By default, you are visible on the who list.
+related:
+  - whovis
+  - who
+  - whotitle

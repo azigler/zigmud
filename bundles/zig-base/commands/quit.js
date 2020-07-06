@@ -12,12 +12,15 @@ module.exports = {
     state.CommandManager.get('save').execute('', player)
 
     // announce to server
-    state.ChannelManager.get('chat').send(state, B.getSystemReporter(), `${player.name} has logged off.`)
+    const builderMessage = `${player.name} logged off.`
+    const playerMessage = 'A spirit fades away.'
+    state.ChannelManager.get('builder').send(state, B.getSystemReporter(), builderMessage)
+    state.ChannelManager.get('ooc').send(state, B.getSystemReporter(), playerMessage)
     Logger.log(`${player.name} has quit`)
 
     // announce to player and room
-    B.sayAt(player, 'You fade away...')
-    B.sayAtExcept(player.room, `${player.name} fades away...`, [player])
+    B.sayAt(player, 'You blink out of existence.')
+    B.sayAtExcept(player.room, `${player.name} blinks out of existence.`, [player])
 
     // quit
     state.PlayerManager.removePlayer(player, true)
