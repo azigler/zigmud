@@ -178,7 +178,7 @@ function printWhereList (state, player) {
     }
 
     // print where list entry for room
-    B.sayAt(player, B.indent(B.wrap(str, 78, 2), 0), false)
+    B.sayAt(player, B.indent(B.wrap(str, 78, 2), 1), false)
   })
 
   // display total counts
