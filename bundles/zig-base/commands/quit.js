@@ -9,7 +9,7 @@ module.exports = {
 
   command: (state) => (args, player) => {
     // save player and account
-    state.CommandManager.get('save').execute('', player)
+    state.CommandManager.get('save').execute(null, player)
 
     // announce to server
     const builderMessage = `${player.name} logged off.`

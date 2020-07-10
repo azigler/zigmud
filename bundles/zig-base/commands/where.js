@@ -55,12 +55,12 @@ module.exports = {
 
         // announce setting where list visibility
         if (player.getMeta('flair.wherevis') === false) {
-          return B.sayAt(player, B.wrap("You are now invisible on the where and who lists. Use the 'wherevis' or 'whereanon' command to change your where list visibility.", 80))
+          return B.sayAt(player, "You are now invisible on the where and who lists. Use the 'wherevis' or 'whereanon' command to change your where list visibility.")
         }
         if (player.getMeta('flair.wherevis') === true) {
-          return B.sayAt(player, B.wrap("You are now visible on the where list. Use the 'whereinvis' or 'whereanon' command to change your where list visibility.", 80))
+          return B.sayAt(player, "You are now visible on the where list. Use the 'whereinvis' or 'whereanon' command to change your where list visibility.")
         } else {
-          return B.sayAt(player, B.wrap("You are now anonymous on the where list. Use the 'wherevis' or 'whereinvis' command to change your where list visibility.", 80))
+          return B.sayAt(player, "You are now anonymous on the where list. Use the 'wherevis' or 'whereinvis' command to change your where list visibility.")
         }
       }
     }
@@ -73,7 +73,7 @@ module.exports = {
 // helper function for printing the where list
 function printWhereList (state, player) {
   B.sayAt(player, B.line(80, '='))
-  B.sayAt(player, B.center(80, 'WHERE'))
+  B.sayAt(player, B.center(80, 'WHERE'), false)
   B.sayAt(player, B.line(80, '='))
   B.at(player, nl)
 
@@ -83,7 +83,7 @@ function printWhereList (state, player) {
   let invis = 0
 
   // initialize extra information for builders and admins
-  let builderStr = ''
+  const builderStr = []
 
   // iterate over every player connected
   state.PlayerManager.players.forEach((otherPlayer) => {
@@ -113,12 +113,12 @@ function printWhereList (state, player) {
     } else if (otherPlayer.getMeta('flair.wherevis') === false) {
       invis++
       rooms[otherPlayer.room.entityReference].invis = rooms[otherPlayer.room.entityReference].invis + 1
-      builderStr += `% ${otherPlayer.name} - ${otherPlayer.room.title}${nl}`
+      builderStr.push(`% ${otherPlayer.name} - ${otherPlayer.room.title}`)
     // if player is anonymous on where list
     } else if (otherPlayer.getMeta('flair.wherevis') === 'anon') {
       anon++
       rooms[otherPlayer.room.entityReference].anon = rooms[otherPlayer.room.entityReference].anon + 1
-      builderStr += `% ${otherPlayer.name} - ${otherPlayer.room.title}${nl}`
+      builderStr.push(`% ${otherPlayer.name} - ${otherPlayer.room.title}`)
     }
   })
 
@@ -178,27 +178,29 @@ function printWhereList (state, player) {
     }
 
     // print where list entry for room
-    B.sayAt(player, B.indent(B.wrap(str, 78, 2), 1))
+    B.sayAt(player, B.indent(B.wrap(str, 78, 2), 0), false)
   })
 
   // display total counts
   B.at(player, nl)
   if (vis.length > 0) {
-    B.sayAt(player, B.center(80, sprintf('%3s', `${vis.length}`) + ' visible   '))
+    B.sayAt(player, B.center(80, sprintf('%3s', `${vis.length}`) + ' visible   '), false)
   }
   if (invis > 0) {
-    B.sayAt(player, B.center(80, sprintf('%3s', `${invis}`) + ' invisible '))
+    B.sayAt(player, B.center(80, sprintf('%3s', `${invis}`) + ' invisible '), false)
   }
   if (anon > 0) {
-    B.sayAt(player, B.center(80, sprintf('%3s', `${anon}`) + ' anonymous'))
+    B.sayAt(player, B.center(80, sprintf('%3s', `${anon}`) + ' anonymous'), false)
   }
   B.at(player, nl)
-  B.sayAt(player, B.center(80, sprintf('%3s', `${state.PlayerManager.players.size}`) + ' TOTAL    '))
+  B.sayAt(player, B.center(80, sprintf('%3s', `${state.PlayerManager.players.size}`) + ' TOTAL    '), false)
 
   // list invisible players and their location
   if (player.role > PlayerRoles.BUILDER && builderStr.length > 0) {
     B.at(player, nl)
-    B.sayAt(player, B.indent(B.wrap(builderStr.trim(), 78), 1))
+    while (builderStr.length > 0) {
+      B.sayAt(player, B.indent(B.wrap(builderStr.shift(), 78, 2), 1), false)
+    }
     B.at(player, nl)
   } else {
     B.at(player, nl)

@@ -2,7 +2,7 @@ const { Broadcast: B, ItemType } = require('ranvier')
 const ArgParser = require('./../../../lib/ArgParser')
 
 /**
- * Get an Item from the Room or a container
+ * Get an Item from the Room or a container and put it in the Player's inventory
  *
  * @fires Item#get
  * @fires Player#getItem

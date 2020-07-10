@@ -50,7 +50,7 @@ module.exports = {
 
     // attempt displaying helpfile
     try {
-      B.sayAt(player, render(state, hfile))
+      B.sayAt(player, render(state, hfile), false)
     // handle helpfile display error
     } catch (e) {
       Logger.error(`UNRENDERABLE HELPFILE: [ ${args} ]`)
@@ -129,7 +129,7 @@ function searchHelpfiles (args, player, state) {
 
   // handle one matching helpfile found
   if (results.size === 1) {
-    const [_, hfile] = [...results][0]
+    const [, hfile] = [...results][0]
     return B.sayAt(player, render(state, hfile))
   }
 

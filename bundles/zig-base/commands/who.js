@@ -82,7 +82,7 @@ module.exports = {
 
     // if no valid arguments provided, display who list
     B.sayAt(player, B.line(80, '='))
-    B.sayAt(player, B.center(80, 'WHO'))
+    B.sayAt(player, B.center(80, 'WHO'), false)
     B.sayAt(player, B.line(80, '='))
     B.at(player, nl)
 
@@ -99,13 +99,13 @@ module.exports = {
     // display total counts
     B.at(player, nl)
     if (whoinvisPlayers > 0) {
-      B.sayAt(player, B.center(80, sprintf('%3s', `${whoinvisPlayers}`) + ' invisible'))
+      B.sayAt(player, B.center(80, sprintf('%3s', `${whoinvisPlayers}`) + ' invisible'), false)
     }
     if (state.PlayerManager.players.size - whoinvisPlayers > 0) {
-      B.sayAt(player, B.center(80, sprintf('%3s', `${state.PlayerManager.players.size - whoinvisPlayers}`) + ' visible  '))
+      B.sayAt(player, B.center(80, sprintf('%3s', `${state.PlayerManager.players.size - whoinvisPlayers}`) + ' visible  '), false)
     }
     B.at(player, nl)
-    B.sayAt(player, B.center(80, sprintf('%3s', `${state.PlayerManager.players.size}`) + ' TOTAL    '))
+    B.sayAt(player, B.center(80, sprintf('%3s', `${state.PlayerManager.players.size}`) + ' TOTAL    '), false)
     B.at(player, nl)
     B.sayAt(player, B.line(80, '='))
   }
@@ -136,7 +136,7 @@ function printWhoEntry (player, otherPlayer) {
   extraPadding = extraPadding.join('').length
 
   // print who list entry
-  B.sayAt(player, B.indent(sprintf('%-67s', `${glyph} ${otherPlayer.name} ${otherPlayer.metadata.flair.whotitle || ''}`) + `${extraPadding < 18 ? B.line(extraPadding, ' ') : B.line(18, ' ')}${getRoleString(otherPlayer.role)}`, 1))
+  B.sayAt(player, B.indent(sprintf('%-67s', `${glyph} ${otherPlayer.name} ${otherPlayer.metadata.flair.whotitle || ''}`) + `${extraPadding < 18 ? B.line(extraPadding, ' ') : B.line(18, ' ')}${getRoleString(otherPlayer.role)}`, 1), false)
 }
 
 // helper function for printing a role for a who list entry
