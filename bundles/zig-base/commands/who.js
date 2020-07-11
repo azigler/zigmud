@@ -136,7 +136,7 @@ function printWhoEntry (player, otherPlayer) {
   extraPadding = extraPadding.join('').length
 
   // print who list entry
-  B.sayAt(player, B.indent(sprintf('%-67s', `${glyph} ${otherPlayer.name} ${otherPlayer.metadata.flair.whotitle || ''}`) + `${extraPadding < 18 ? B.line(extraPadding, ' ') : B.line(18, ' ')}${getRoleString(otherPlayer.role)}`, 1), false)
+  B.sayAt(player, B.indent(sprintf(`%-${67 + extraPadding}s`, `${glyph} ${otherPlayer.name} ${otherPlayer.metadata.flair.whotitle || ''}`) + `${getRoleString(otherPlayer.role)}`, 1), false)
 }
 
 // helper function for printing a role for a who list entry
