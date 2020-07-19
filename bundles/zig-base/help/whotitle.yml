@@ -1,8 +1,0 @@
----
-command: whotitle
-body: |
-  Change the title that displays after your name when you're visible on the who list. To view the who list, use the 'who' command. By default, you have no who title. There is already a space between the end of your name and the first character of your whotitle.
-related:
-  - whoinvis
-  - whovis
-  - who

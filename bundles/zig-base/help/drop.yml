@@ -1,9 +1,0 @@
----
-command: drop
-body: |
-  Drop an item in the room from your inventory. You can use the 'all' keyword to drop all items from your inventory. By prefixing a number and period (e.g., 'drop 3.ball') you can target specific items with the same keyword.
-related:
-  - get
-  - put
-  - give
-  - inventory

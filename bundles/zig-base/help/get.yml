@@ -1,9 +1,0 @@
----
-command: get
-body: |
-  Get an item from a room or container and put it in your inventory. You can use the 'all' keyword to get all items from a source. You can use the 'from' proposition with this command. Some items are irretrievable and cannot be picked up. You can also use the 'loot' alias to target a container and take all items from inside of it. You cannot use the 'loot' alias on a room or non-container item. To get an item, you must have sufficient space in your inventory. By prefixing a number and period (e.g., 'get 3.ball'), you can target specific items with the same keyword.
-related:
-  - drop
-  - put
-  - give
-  - inventory

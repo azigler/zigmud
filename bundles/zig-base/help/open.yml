@@ -1,8 +1,0 @@
----
-command: open
-body: |
-  Open a closed container or door. You cannot open something that is locked unless you have the required key. You can include the 'door' keyword before the exit direction, but it's not required.
-related:
-  - close
-  - lock
-  - unlock

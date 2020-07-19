@@ -1,6 +1,0 @@
----
-command: help
-body: |
-  Search for and display a helpfile. Using this command with the 'search' argument allows you to view all commands with at least a partial command, alias, or keyword match to the provided keyword. Targeting a keyword directly with this command will display the best matching helpfile for it, if found. Many helpfiles provide information about commands and channels, and others explain game mechanics and lore.
-
-  If you are a new player, it's recommended that you read the 'newbie' helpfile.

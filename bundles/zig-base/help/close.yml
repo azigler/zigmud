@@ -1,8 +1,0 @@
----
-command: close
-body: |
-  Close an open container or door. Not all containers can be closed. You can include the 'door' keyword before the exit direction, but it's not required.
-related:
-  - open
-  - lock
-  - unlock

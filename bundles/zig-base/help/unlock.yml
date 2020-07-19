@@ -1,8 +1,0 @@
----
-command: unlock
-body: |
-  Unlock a locked container or door, provided you have the required key. You can include the 'door' keyword before the exit direction, but it's not required.
-related:
-  - lock
-  - open
-  - close

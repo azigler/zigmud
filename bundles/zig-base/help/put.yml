@@ -1,9 +1,0 @@
----
-command: put
-body: |
-  Put an item from your inventory into an open container. You can use the 'all' keyword to put all items from your inventory into a container, provided there's sufficient space. You can use the 'in' or 'into' propositions with this command. By prefixing a number and period (e.g., 'put 3.ball in bag'), you can target specific items with the same keyword.
-related:
-  - get
-  - drop
-  - give
-  - inventory

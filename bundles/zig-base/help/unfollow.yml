@@ -1,7 +1,0 @@
----
-command: unfollow
-body: |
-  Stop following whoever you're following as they move between rooms. Using the 'follow' command and either targeting yourself or using the 'none' or 'stop' arguments will also make you stop following someone. By prefixing a number and period (e.g., 'unfollow 3.man'), you can target specific characters with the same keyword.
-related:
-  - ditch
-  - follow
