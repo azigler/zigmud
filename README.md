@@ -14,3 +14,4 @@
 The following is a list of Ranvier bundles I have created with this project:
 
 - [ranvier-webhooks](https://github.com/azigler/ranvier-webhooks)
+- [ranvier-datasource-couchdb](https://github.com/azigler/ranvier-datasource-couchdb)

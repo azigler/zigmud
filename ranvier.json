@@ -2,6 +2,7 @@
   "port": 4334,
   "bundles": [
     "ranvier-webhooks",
+    "ranvier-datasource-couchdb",
     "telnet-networking",
     "zig-base",
     "zig-combat"
@@ -29,54 +30,54 @@
     }
   },
   "dataSources": {
-    "YamlArea": {
-      "require": "ranvier-datasource-file.YamlAreaDataSource"
-    },
     "Yaml": {
       "require": "ranvier-datasource-file.YamlDataSource"
     },
-    "YamlDirectory": {
-      "require": "ranvier-datasource-file.YamlDirectoryDataSource"
-    },
-    "JsonDirectory": {
-      "require": "ranvier-datasource-file.JsonDirectoryDataSource"
+    "CouchDb": {
+      "require": "./bundles/ranvier-datasource-couchdb/CouchDbDataSource.js"
     }
   },
   "entityLoaders": {
     "accounts": {
-      "source": "JsonDirectory",
+      "source": "CouchDb",
       "config": {
-        "path": "data/account"
+        "namespace": "zmdev_",
+        "db": "account"
       }
     },
     "players": {
-      "source": "JsonDirectory",
+      "source": "CouchDb",
       "config": {
-        "path": "data/player"
+        "namespace": "zmdev_",
+        "db": "player"
       }
     },
     "areas": {
-      "source": "YamlArea",
+      "source": "CouchDb",
       "config": {
-        "path": "bundles/[BUNDLE]/areas"
+        "namespace": "zmdev_",
+        "db": "area"
       }
     },
     "npcs": {
-      "source": "Yaml",
+      "source": "CouchDb",
       "config": {
-        "path": "bundles/[BUNDLE]/areas/[AREA]/npcs.yml"
+        "namespace": "zmdev_",
+        "db": "npc"
       }
     },
     "items": {
-      "source": "Yaml",
+      "source": "CouchDb",
       "config": {
-        "path": "bundles/[BUNDLE]/areas/[AREA]/items.yml"
+        "namespace": "zmdev_",
+        "db": "item"
       }
     },
     "rooms": {
-      "source": "Yaml",
+      "source": "CouchDb",
       "config": {
-        "path": "bundles/[BUNDLE]/areas/[AREA]/rooms.yml"
+        "namespace": "zmdev_",
+        "db": "room"
       }
     },
     "quests": {
@@ -86,9 +87,10 @@
       }
     },
     "help": {
-      "source": "YamlDirectory",
+      "source": "CouchDb",
       "config": {
-        "path": "bundles/[BUNDLE]/help"
+        "namespace": "zmdev_",
+        "db": "help"
       }
     }
   }

@@ -2,11 +2,6 @@ node_modules
 .env
 .TODO
 
-data/player/*.json
-data/account/*.json
-!data/player/.gitkeep
-!data/account/.gitkeep
-
 log/*.log
 !log/.gitkeep
 

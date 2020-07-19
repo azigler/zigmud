@@ -4,3 +4,6 @@
 [submodule "bundles/ranvier-webhooks"]
 	path = bundles/ranvier-webhooks
 	url = https://github.com/azigler/ranvier-webhooks
+[submodule "bundles/ranvier-datasource-couchdb"]
+	path = bundles/ranvier-datasource-couchdb
+	url = https://github.com/azigler/ranvier-datasource-couchdb
