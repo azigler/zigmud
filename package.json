@@ -8,7 +8,7 @@
   "description": "Experimental fork of RanvierMUD/trpg-skeleton",
   "author": "Andrew Zigler <andrewzigler@gmail.com> (https://www.andrewzigler.com)",
   "engines": {
-    "node": ">= 10.12.0"
+    "node": ">=12.18.2"
   },
   "license": "MIT",
   "scripts": {
