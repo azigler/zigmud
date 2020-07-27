@@ -9,8 +9,8 @@ module.exports = {
   command: state => (args, player) => {
     player.account.save(() => {
       player.save(() => {
+        B.sayAt(player, 'Saved.')
       })
     })
-    B.sayAt(player, 'Saved.')
   }
 }

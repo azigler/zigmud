@@ -1,6 +1,7 @@
 const { Broadcast: B, ItemType } = require('ranvier')
-const ArgParser = require('./../../../lib/ArgParser')
-const { CommandParser } = require('./../../../lib/CommandParser')
+const ArgParser = require('./../lib/ArgParser')
+const { CommandParser } = require('./../lib/CommandParser')
+const TraceryUtil = require('./../../ranvier-tracery/lib/TraceryUtil')
 
 /**
  * Open a container Item or door
@@ -123,8 +124,8 @@ function handleDoor (player, doorRoom, targetRoom, door, exit, arg0, state) {
       if (!door.closed) {
         state.CommandManager.get('open').execute(exit, player, 'close')
       }
-      B.sayAt(player, `You lock the ${exit} exit with ${playerKey.name}.`)
-      B.sayAtExcept(player.room, `${player.name} locks the ${exit} exit with ${playerKey.name}.`, [player])
+      B.sayAt(player, `You lock the ${exit} exit with ${TraceryUtil.pluralizeItem(playerKey)}.`)
+      B.sayAtExcept(player.room, `${player.name} locks the ${exit} exit with ${TraceryUtil.pluralizeItem(playerKey)}.`, [player])
       if (targetRoom !== player.room) {
         B.sayAtExcept(targetRoom, `Someone locks the ${exit} exit from the other side.`, [player])
       }
@@ -139,8 +140,8 @@ function handleDoor (player, doorRoom, targetRoom, door, exit, arg0, state) {
         if (!playerKey) {
           return B.sayAt(player, `You don't have the key to unlock the ${exit} exit.`)
         } else {
-          B.sayAt(player, `You unlock the ${exit} exit with ${playerKey.name}.`)
-          B.sayAtExcept(player.room, `${player.name} unlocks the ${exit} exit with ${playerKey.name}.`, [player])
+          B.sayAt(player, `You unlock the ${exit} exit with ${TraceryUtil.pluralizeItem(playerKey)}.`)
+          B.sayAtExcept(player.room, `${player.name} unlocks the ${exit} exit with ${TraceryUtil.pluralizeItem(playerKey)}.`, [player])
           if (targetRoom !== player.room) {
             B.sayAtExcept(targetRoom, `Someone unlocks the ${exit} exit from the other side.`, [player])
           }
@@ -172,70 +173,70 @@ function handleItem (player, item, arg0, state) {
           if (item.lockedBy) {
             if (playerKey) {
               state.CommandManager.get('open').execute(item.name, player, 'unlock')
-              B.sayAt(player, `You open ${item.name}.`)
-              B.sayAtExcept(player.room, `${player.name} opens ${item.name}.`, [player])
+              B.sayAt(player, `You open ${TraceryUtil.pluralizeItem(item)}.`)
+              B.sayAtExcept(player.room, `${player.name} opens ${TraceryUtil.pluralizeItem(item)}.`, [player])
               item.unlock()
               item.open()
               return
             }
           }
-          B.sayAtExcept(player.room, `${player.name} tries to open ${item.name} in vain.`, [player])
-          return B.sayAt(player, `You try to open ${item.name} in vain.`)
+          B.sayAtExcept(player.room, `${player.name} tries to open ${TraceryUtil.pluralizeItem(item)} in vain.`, [player])
+          return B.sayAt(player, `You try to open ${TraceryUtil.pluralizeItem(item)} in vain.`)
         }
         if (item.closed) {
-          B.sayAt(player, `You open ${item.name}.`)
-          B.sayAtExcept(player.room, `${player.name} opens ${item.name}.`, [player])
+          B.sayAt(player, `You open ${TraceryUtil.pluralizeItem(item)}.`)
+          B.sayAtExcept(player.room, `${player.name} opens ${TraceryUtil.pluralizeItem(item)}.`, [player])
           return item.open()
         }
-        return B.sayAt(player, `${B.capitalize(item.name)} isn't closed.`)
+        return B.sayAt(player, `${B.capitalize(TraceryUtil.pluralizeItem(item))} isn't closed.`)
       }
       // if player is trying to close the item
       case 'close': {
         if (item.locked || item.closed) {
-          return B.sayAt(player, `${B.capitalize(item.name)} is already closed.`)
+          return B.sayAt(player, `${B.capitalize(TraceryUtil.pluralizeItem(item))} is already closed.`)
         } if (item.closeable) {
-          B.sayAt(player, `You close ${item.name}.`)
-          B.sayAtExcept(player.room, `${player.name} closes the ${item.name}.`, [player])
+          B.sayAt(player, `You close ${TraceryUtil.pluralizeItem(item)}.`)
+          B.sayAtExcept(player.room, `${player.name} closes the ${TraceryUtil.pluralizeItem(item)}.`, [player])
           return item.close()
         } else {
-          B.sayAt(player, `You can't close ${item.name}.`)
+          B.sayAt(player, `You can't close ${TraceryUtil.pluralizeItem(item)}.`)
         }
         break
       }
       // if player is trying to lock the item
       case 'lock': {
         if (item.locked) {
-          return B.sayAt(player, `${B.capitalize(item.name)} is already locked.`)
+          return B.sayAt(player, `${B.capitalize(TraceryUtil.pluralizeItem(item))} is already locked.`)
         }
         if (!playerKey) {
-          return B.sayAt(player, `You don't have the key to lock ${item.name}.`)
+          return B.sayAt(player, `You don't have the key to lock ${TraceryUtil.pluralizeItem(item)}.`)
         }
         if (!item.closed) {
           state.CommandManager.get('open').execute(item.name, player, 'close')
         }
-        B.sayAt(player, `You lock ${item.name} with ${playerKey.name}.`)
-        B.sayAtExcept(player.room, `${player.name} locks ${item.name} with ${playerKey.name}.`, [player])
+        B.sayAt(player, `You lock ${TraceryUtil.pluralizeItem(item)} with ${TraceryUtil.pluralizeItem(playerKey)}.`)
+        B.sayAtExcept(player.room, `${player.name} locks ${TraceryUtil.pluralizeItem(item)} with ${TraceryUtil.pluralizeItem(playerKey)}.`, [player])
         return item.lock()
       }
       // if player is trying to unlock the item
       case 'unlock': {
         if (item.locked) {
           if (!playerKey) {
-            return B.sayAt(player, `You don't have the key to unlock ${item.name}.`)
+            return B.sayAt(player, `You don't have the key to unlock ${TraceryUtil.pluralizeItem(item)}.`)
           } else {
-            B.sayAt(player, `You unlock ${item.name} with ${playerKey.name}.`)
-            B.sayAtExcept(player.room, `${player.name} unlocks ${item.name} with ${playerKey.name}.`, [player])
+            B.sayAt(player, `You unlock ${TraceryUtil.pluralizeItem(item)} with ${TraceryUtil.pluralizeItem(playerKey)}.`)
+            B.sayAtExcept(player.room, `${player.name} unlocks ${TraceryUtil.pluralizeItem(item)} with ${TraceryUtil.pluralizeItem(playerKey)}.`, [player])
             return item.unlock()
           }
         }
         if (item.closed) {
-          return B.sayAt(player, `${B.capitalize(item.name)} is already unlocked.`)
+          return B.sayAt(player, `${B.capitalize(TraceryUtil.pluralizeItem(item))} is already unlocked.`)
         } else {
-          return B.sayAt(player, `${B.capitalize(item.name)} is already open.`)
+          return B.sayAt(player, `${B.capitalize(TraceryUtil.pluralizeItem(item))} is already open.`)
         }
       }
     }
   } else {
-    return B.sayAt(player, `You can't ${arg0} ${item.name}.`)
+    return B.sayAt(player, `You can't ${arg0} ${TraceryUtil.pluralizeItem(item)}.`)
   }
 }

@@ -1,5 +1,6 @@
 const { Broadcast: B, ItemType } = require('ranvier')
-const ArgParser = require('./../../../lib/ArgParser')
+const ArgParser = require('./../lib/ArgParser')
+const TraceryUtil = require('./../../ranvier-tracery/lib/TraceryUtil')
 
 /**
  * Get an Item from the Room or a container and put it in the Player's inventory
@@ -62,12 +63,12 @@ module.exports = {
 
       // if targeted container isn't a container, reject command
       if (container.type !== ItemType.CONTAINER) {
-        return B.sayAt(player, `${container.name} isn't a container.`)
+        return B.sayAt(player, `${B.capitalize(TraceryUtil.pluralizeItem(container))} isn't a container.`)
       }
 
       // if container is closed, reject command
       if (container.closed) {
-        return B.sayAt(player, `${container.name} is closed.`)
+        return B.sayAt(player, `${B.capitalize(TraceryUtil.pluralizeItem(container))} is closed.`)
       }
 
       // set container as source
@@ -125,7 +126,7 @@ module.exports = {
 function getItem (item, player, container, arg0) {
   // if item is irretrievable, stop
   if (item.metadata.irretrievable) {
-    return B.sayAt(player, `You can't ${arg0} ${item.name}.`)
+    return B.sayAt(player, `You can't ${arg0} ${TraceryUtil.pluralizeItem(item, 1)}.`)
   }
 
   // if container was provided, remove item from it
@@ -141,8 +142,8 @@ function getItem (item, player, container, arg0) {
 
   // announce getting item
   if (container) {
-    B.sayAt(player, `You ${arg0} ${item.name} from ${container.name}.`)
-    B.sayAtExcept(player.room, `${player.name} ${arg0}s ${item.name} from ${container.name}.`, [player])
+    B.sayAt(player, `You ${arg0} ${TraceryUtil.pluralizeItem(item)} from ${TraceryUtil.pluralizeItem(container)}.`)
+    B.sayAtExcept(player.room, `${player.name} ${arg0}s ${TraceryUtil.pluralizeItem(item)} from ${TraceryUtil.pluralizeItem(container)}.`, [player])
 
     /**
      * @event Item#itemRetrieved
@@ -150,8 +151,8 @@ function getItem (item, player, container, arg0) {
     */
     container.emit('itemRetrieved', player, item)
   } else {
-    B.sayAt(player, `You ${arg0} ${item.name}.`)
-    B.sayAtExcept(player.room, `${player.name} ${arg0}s ${item.name}.`, [player])
+    B.sayAt(player, `You ${arg0} ${TraceryUtil.pluralizeItem(item)}.`)
+    B.sayAtExcept(player.room, `${player.name} ${arg0}s ${TraceryUtil.pluralizeItem(item)}.`, [player])
 
     /**
      * @event Room#itemRetrieved
@@ -187,12 +188,12 @@ function checkInventoryFull (item, player, container, sourceType) {
   // if recipient's inventory is full, stop
   if (player.isInventoryFull()) {
     if (sourceType === 'room') {
-      B.sayAt(player, `You try to get ${item.name} but your inventory is full.`)
-      B.sayAtExcept(player.room, `${player.name} tries to get ${item.name} but their inventory is full.`, [player])
+      B.sayAt(player, `You try to get ${TraceryUtil.pluralizeItem(item)} but your inventory is full.`)
+      B.sayAtExcept(player.room, `${player.name} tries to get ${TraceryUtil.pluralizeItem(item)} but their inventory is full.`, [player])
       return true
     } if (sourceType === 'container') {
-      B.sayAt(player, `You try to get ${item.name} from ${container.name} but your inventory is full.`)
-      B.sayAtExcept(player.room, `${player.name} tries to get ${item.name} from ${container.name}, but their inventory is full.`, [player])
+      B.sayAt(player, `You try to get ${TraceryUtil.pluralizeItem(item)} from ${TraceryUtil.pluralizeItem(container)} but your inventory is full.`)
+      B.sayAtExcept(player.room, `${player.name} tries to get ${TraceryUtil.pluralizeItem(item)} from ${TraceryUtil.pluralizeItem(container)}, but their inventory is full.`, [player])
       return true
     }
   } else {

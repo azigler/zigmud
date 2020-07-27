@@ -1,5 +1,6 @@
 const { Broadcast: B } = require('ranvier')
-const ArgParser = require('./../../../lib/ArgParser')
+const ArgParser = require('./../lib/ArgParser')
+const TraceryUtil = require('./../../ranvier-tracery/lib/TraceryUtil')
 
 /**
  * Drop an Item in the Room from the Player's Inventory
@@ -54,8 +55,8 @@ function dropItem (item, player, arg0) {
   player.room.addItem(item)
 
   // announce dropping item
-  B.sayAt(player, `You ${arg0} ${item.name}.`)
-  B.sayAtExcept(player.room, `${player.name} ${arg0}${arg0 === 'relinquish' ? 'es' : 's'} ${item.name}.`, [player])
+  B.sayAt(player, `You ${arg0} ${TraceryUtil.pluralizeItem(item)}.`)
+  B.sayAtExcept(player.room, `${player.name} ${arg0}${arg0 === 'relinquish' ? 'es' : 's'} ${TraceryUtil.pluralizeItem(item, 1)}.`, [player])
 
   /**
    * @event Item#drop

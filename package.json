@@ -12,7 +12,8 @@
   },
   "license": "MIT",
   "scripts": {
-    "start": "npm run tunnel && node ./ranvier -v",
+    "start": "node ./ranvier -v",
+    "dev": "npm run tunnel && node ./ranvier -v",
     "init": "node ./util/init-bundles.js",
     "postinstall": "npm run install-bundle install-all && npm run update-bundle update-all && npm link ranvier",
     "update-bundle": "node ./util/update-bundle.js",
@@ -21,7 +22,9 @@
     "lint": "eslint . --ext .js --fix --ignore-pattern '**/node_modules/**'",
     "merge-master-to-dev": "git checkout develop && git merge --no-ff master",
     "merge-dev-to-master": "git checkout master && git merge --no-ff develop",
-    "tunnel": "ssh -o ExitOnForwardFailure=yes -f -N -L 5984:127.0.0.1:5984 root@138.68.247.173 || exit 0"
+    "tunnel": "ssh -o ExitOnForwardFailure=yes -f -N -L 5984:127.0.0.1:5984 root@138.68.247.173 || exit 0",
+    "dev:zpanel": "nodemon ./ranvier --ignore bundles/ranvier-zpanel/dist",
+    "grep": "ps aux | grep -i ranvier"
   },
   "dependencies": {
     "commander": "^2.19.0",

@@ -1,5 +1,5 @@
 const { Broadcast: B } = require('ranvier')
-const ArgParser = require('./../../../lib/ArgParser')
+const ArgParser = require('./../lib/ArgParser')
 
 /**
  * Follow a Character

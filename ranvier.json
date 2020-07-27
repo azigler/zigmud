@@ -1,8 +1,11 @@
 {
   "port": 4334,
   "bundles": [
-    "ranvier-webhooks",
     "ranvier-datasource-couchdb",
+    "ranvier-tracery",
+    "ranvier-webhooks",
+    "ranvier-zpanel",
+    "redacted-debug",
     "telnet-networking",
     "zig-base",
     "zig-combat"
@@ -28,6 +31,10 @@
       "path": "~/zigmud",
       "link": true
     }
+  },
+  "zPanel": {
+    "port": 4335,
+    "url": "localhost"
   },
   "dataSources": {
     "Yaml": {

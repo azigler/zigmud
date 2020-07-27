@@ -1,5 +1,6 @@
 const { Broadcast: B } = require('ranvier')
-const ArgParser = require('./../../../lib/ArgParser')
+const ArgParser = require('./../lib/ArgParser')
+const TraceryUtil = require('./../../ranvier-tracery/lib/TraceryUtil')
 
 /**
  * Give an Item from the Player's Inventory to another Character
@@ -131,10 +132,10 @@ function giveItem (targetItem, player, target) {
   target.addItem(targetItem)
 
   // announce giving item
-  B.sayAt(player, `You give ${targetItem.name} to ${target.name}.`)
-  B.sayAtExcept(player.room, B.capitalize(`${player.name} gives ${targetItem.name} to ${target.name}.`), [player, target])
+  B.sayAt(player, `You give ${TraceryUtil.pluralizeItem(targetItem)} to ${target.name}.`)
+  B.sayAtExcept(player.room, B.capitalize(`${player.name} gives ${TraceryUtil.pluralizeItem(targetItem)} to ${target.name}.`), [player, target])
   if (!target.isNpc) {
-    B.sayAt(target, `${player.name} gives ${targetItem.name} to you.`)
+    B.sayAt(target, `${player.name} gives ${TraceryUtil.pluralizeItem(targetItem)} to you.`)
   }
 
   /**
@@ -160,10 +161,10 @@ function giveItem (targetItem, player, target) {
 function checkInventoryFull (targetItem, player, target) {
   // if recipient's inventory is full, stop
   if (target.isInventoryFull()) {
-    B.sayAt(player, `You try to give ${targetItem.name} to ${target.name}, but their inventory is full.`)
-    B.sayAtExcept(player.room, `${player.name} tries to give ${targetItem.name} to ${target.name}, but their inventory is full.`, [player, target])
+    B.sayAt(player, `You try to give ${TraceryUtil.pluralizeItem(targetItem)} to ${target.name}, but their inventory is full.`)
+    B.sayAtExcept(player.room, `${player.name} tries to give ${TraceryUtil.pluralizeItem(targetItem)} to ${target.name}, but their inventory is full.`, [player, target])
     if (!target.isNpc) {
-      B.sayAt(target, `${player.name} tries to give ${targetItem.name} to you, but your inventory is full.`)
+      B.sayAt(target, `${player.name} tries to give ${TraceryUtil.pluralizeItem(targetItem)} to you, but your inventory is full.`)
     }
     return true
   } else {

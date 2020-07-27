@@ -1,5 +1,6 @@
 const { Broadcast: B, ItemType } = require('ranvier')
-const ArgParser = require('./../../../lib/ArgParser')
+const ArgParser = require('./../lib/ArgParser')
+const TraceryUtil = require('./../../ranvier-tracery/lib/TraceryUtil')
 
 /**
  * Remove an Item from the Player's equipment into their Inventory
@@ -79,11 +80,11 @@ function removeItem (item, slot, player, arg0) {
 
   // announce remove item
   if (item.type === ItemType.WEAPON) {
-    B.sayAt(player, `You ${arg0} ${item.name} from your ${slot}.`)
-    B.sayAtExcept(player.room, B.capitalize(`${player.name} ${arg0}${arg0 === 'unbrandish' ? 'es' : 's'} ${item.name} from their ${slot}.`), player)
+    B.sayAt(player, `You ${arg0} ${TraceryUtil.pluralizeItem(item)} from your ${slot}.`)
+    B.sayAtExcept(player.room, B.capitalize(`${player.name} ${arg0}${arg0 === 'unbrandish' ? 'es' : 's'} ${TraceryUtil.pluralizeItem(item)} from their ${slot}.`), player)
   } else {
-    B.sayAt(player, `You ${arg0} ${item.name} from your ${slot}.`)
-    B.sayAtExcept(player.room, `${player.name} ${arg0}s ${item.name} from their ${slot}.`, [player])
+    B.sayAt(player, `You ${arg0} ${TraceryUtil.pluralizeItem(item)} from your ${slot}.`)
+    B.sayAtExcept(player.room, `${player.name} ${arg0}s ${TraceryUtil.pluralizeItem(item)} from their ${slot}.`, [player])
   }
 }
 
@@ -91,8 +92,8 @@ function removeItem (item, slot, player, arg0) {
 function checkInventoryFull (item, slot, player, arg0) {
   // if player's inventory is full, stop
   if (player.isInventoryFull()) {
-    B.sayAt(player, `You try to ${arg0} ${item.name} from ${slot} but your inventory is full.`)
-    B.sayAtExcept(player.room, `${player.name} tries to ${arg0} ${item.name} from their ${slot}, but their inventory is full.`, [player])
+    B.sayAt(player, `You try to ${arg0} ${TraceryUtil.pluralizeItem(item)} from ${slot} but your inventory is full.`)
+    B.sayAtExcept(player.room, `${player.name} tries to ${arg0} ${TraceryUtil.pluralizeItem(item)} from their ${slot}, but their inventory is full.`, [player])
     return true
   } else {
     return false

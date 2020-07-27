@@ -6,8 +6,8 @@ const {
   PrivateAudience,
   PlayerRoles
 } = require('ranvier')
-const WhisperAudience = require('./../../lib/WhisperAudience')
-const PartyCommunicatorAudience = require('./../../lib/PartyCommunicatorAudience')
+const WhisperAudience = require('./lib/WhisperAudience')
+const PartyCommunicatorAudience = require('./lib/PartyCommunicatorAudience')
 const { Channel } = require('ranvier').Channel
 
 /**

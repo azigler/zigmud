@@ -1,7 +1,8 @@
 const Ranvier = require('ranvier')
 const { Broadcast: B, Logger, ItemType } = Ranvier
 const { EquipSlotTakenError } = Ranvier.EquipErrors
-const ArgParser = require('./../../../lib/ArgParser')
+const ArgParser = require('./../lib/ArgParser')
+const TraceryUtil = require('./../../ranvier-tracery/lib/TraceryUtil')
 
 /**
  * Wear an Item in the Player's equipment from their Inventory
@@ -86,7 +87,7 @@ function wearItem (item, slotArg, player, arg0) {
 
     // if no potential slot for item is empty, stop
     if (wearSlot === undefined) {
-      return B.sayAt(player, `You have to remove something before you can ${arg0} ${item.name}.`)
+      return B.sayAt(player, `You have to remove something before you can ${arg0} ${TraceryUtil.pluralizeItem(item)}.`)
     }
   // handle specified slot
   } else {
@@ -100,7 +101,7 @@ function wearItem (item, slotArg, player, arg0) {
 
   // if specified slot invalid for item, stop
   if (!wearSlot) {
-    return B.sayAt(player, `You can't ${arg0} ${item.name} there.`)
+    return B.sayAt(player, `You can't ${arg0} ${TraceryUtil.pluralizeItem(item)} there.`)
   }
 
   // attempt wearing item
@@ -110,9 +111,9 @@ function wearItem (item, slotArg, player, arg0) {
     if (err instanceof EquipSlotTakenError) {
       const conflict = player.equipment.get(wearSlot)
       if (item.metadata.slots.length === 1) {
-        B.sayAt(player, `You have to remove ${conflict.name} before you can ${arg0} ${item.name}.`)
+        B.sayAt(player, `You have to remove ${TraceryUtil.pluralizeItem(conflict)} before you can ${arg0} ${TraceryUtil.pluralizeItem(item)}.`)
       } else {
-        B.sayAt(player, `You have to remove something before you can ${arg0} ${item.name}.`)
+        B.sayAt(player, `You have to remove something before you can ${arg0} ${TraceryUtil.pluralizeItem(item)}.`)
       }
     }
     return Logger.error(err)
@@ -120,11 +121,11 @@ function wearItem (item, slotArg, player, arg0) {
 
   // announce wearing item in slot
   if (item.type === ItemType.WEAPON) {
-    B.sayAt(player, `You ${arg0} ${item.name} in your ${wearSlot}.`)
-    B.sayAtExcept(player.room, B.capitalize(`${player.name} ${arg0}${arg0 === 'brandish' ? 'es' : 's'} ${item.name} in their ${wearSlot}.`), player)
+    B.sayAt(player, `You ${arg0} ${TraceryUtil.pluralizeItem(item)} in your ${wearSlot}.`)
+    B.sayAtExcept(player.room, B.capitalize(`${player.name} ${arg0}${arg0 === 'brandish' ? 'es' : 's'} ${TraceryUtil.pluralizeItem(item)} in their ${wearSlot}.`), player)
   } else {
-    B.sayAt(player, `You ${arg0} ${item.name} on your ${wearSlot}.`)
-    B.sayAtExcept(player.room, B.capitalize(`${player.name} ${arg0}s ${item.name} on their ${wearSlot}.`), player)
+    B.sayAt(player, `You ${arg0} ${TraceryUtil.pluralizeItem(item)} on your ${wearSlot}.`)
+    B.sayAtExcept(player.room, B.capitalize(`${player.name} ${arg0}s ${TraceryUtil.pluralizeItem(item)} on their ${wearSlot}.`), player)
   }
 }
 
