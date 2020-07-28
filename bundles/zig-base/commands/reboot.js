@@ -10,10 +10,12 @@ module.exports = {
 
   command: state => (args, player) => {
     const sec = args * 1000 || 10000
-    state.PlayerManager.saveAll()
     state.ChannelManager.get('ooc').send(state, B.getSystemReporter(), `The server is rebooting in ${sec / 1000} seconds...`)
     setTimeout(() => {
-      process.exit()
-    }, sec)
+      state.PlayerManager.saveAll()
+      setTimeout(() => {
+        process.exit()
+      }, 2000)
+    }, sec - 2000)
   }
 }
