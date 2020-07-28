@@ -6,7 +6,7 @@ const { Broadcast: B, PlayerRoles, Config } = require('ranvier')
 module.exports = {
   usage: 'teleport [<player/room>]',
   aliases: ['tp', 'recall'],
-  requiredRole: PlayerRoles.ADMIN,
+  requiredRole: PlayerRoles.BUILDER,
 
   command: (state) => (args, player, arg0) => {
     // initialize flair
@@ -28,6 +28,8 @@ module.exports = {
         state.CommandManager.get('look').execute('', player)
       })
     }
+
+    if (arg0 === 'tp') arg0 = 'teleport'
 
     const argWords = args.split(' ')
     let target = args
