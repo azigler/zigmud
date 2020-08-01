@@ -13,6 +13,7 @@
 
 The following is a list of Ranvier bundles I have created with this project:
 
-- [ranvier-webhooks](https://github.com/azigler/ranvier-webhooks)
 - [ranvier-datasource-couchdb](https://github.com/azigler/ranvier-datasource-couchdb)
+- [ranvier-tracery](https://github.com/azigler/ranvier-tracery)
+- [ranvier-webhooks](https://github.com/azigler/ranvier-webhooks)
 - [ranvier-zpanel](https://github.com/azigler/ranvier-zpanel)
