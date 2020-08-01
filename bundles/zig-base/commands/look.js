@@ -170,7 +170,7 @@ function lookEntity (state, player, args, arg0) {
     }
 
     // print Player's own description
-    B.sayAt(player, nl + player.description + nl, 80)
+    B.sayAt(player, nl + B.indent(B.wrap(player.description, 78), 1) + nl, false)
 
     // print a list of Player's own equipment, if they have any
     return state.CommandManager.get('equipment').execute(undefined, player)
@@ -227,7 +227,7 @@ function lookEntity (state, player, args, arg0) {
     }
 
     // print Character's description
-    B.sayAt(player, nl + entity.description + nl, 80)
+    B.sayAt(player, nl + B.indent(B.wrap(entity.description, 78), 1) + nl, false)
 
     // print Character's equipment list
     if (entity.isNpc) {
@@ -257,7 +257,7 @@ function lookEntity (state, player, args, arg0) {
     }
 
     if (args[0] !== 'in') {
-      B.sayAt(player, nl + entity.description, 80)
+      B.sayAt(player, B.indent(B.wrap(nl + entity.description, 78), 1), false)
     }
 
     if (args[0] === 'in') {
