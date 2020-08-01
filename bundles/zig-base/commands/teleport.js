@@ -49,7 +49,7 @@ module.exports = {
     if (argWords[0] === 'void') {
       B.sayAt(player, `You ${arg0} ${flair}.\n`)
       B.sayAtExcept(player.room, `${player.name} suddenly disappears ${flair}.`, [player])
-      player.moveTo(state.RoomManager.getRoom('void:void'))
+      return player.moveTo(state.RoomManager.getRoom('void:void'))
     }
 
     // determine if target is a room

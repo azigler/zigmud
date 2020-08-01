@@ -79,21 +79,16 @@ function removeItem (item, slot, player, arg0) {
   player.unequip(slot)
 
   // announce remove item
-  if (item.type === ItemType.WEAPON) {
-    B.sayAt(player, `You ${arg0} ${TraceryUtil.pluralizeItem(item)} from your ${slot}.`)
-    B.sayAtExcept(player.room, B.capitalize(`${player.name} ${arg0}${arg0 === 'unbrandish' ? 'es' : 's'} ${TraceryUtil.pluralizeItem(item)} from their ${slot}.`), player)
-  } else {
-    B.sayAt(player, `You ${arg0} ${TraceryUtil.pluralizeItem(item)} from your ${slot}.`)
-    B.sayAtExcept(player.room, `${player.name} ${arg0}s ${TraceryUtil.pluralizeItem(item)} from their ${slot}.`, [player])
-  }
+  B.sayAt(player, `You ${arg0} ${TraceryUtil.pluralizeEntity(item)}.`)
+  B.sayAtExcept(player.room, B.capitalize(`${player.name} ${arg0}${arg0 === 'unbrandish' ? 'es' : 's'} ${TraceryUtil.pluralizeEntity(item)}.`), player)
 }
 
 // helper function for checking if player's inventory is full
 function checkInventoryFull (item, slot, player, arg0) {
   // if player's inventory is full, stop
   if (player.isInventoryFull()) {
-    B.sayAt(player, `You try to ${arg0} ${TraceryUtil.pluralizeItem(item)} from ${slot} but your inventory is full.`)
-    B.sayAtExcept(player.room, `${player.name} tries to ${arg0} ${TraceryUtil.pluralizeItem(item)} from their ${slot}, but their inventory is full.`, [player])
+    B.sayAt(player, `You try to ${arg0} ${TraceryUtil.pluralizeEntity(item)} from ${slot} but your inventory is full.`)
+    B.sayAtExcept(player.room, `${player.name} tries to ${arg0} ${TraceryUtil.pluralizeEntity(item)} from their ${slot}, but their inventory is full.`, [player])
     return true
   } else {
     return false

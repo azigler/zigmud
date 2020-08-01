@@ -32,8 +32,7 @@ module.exports = {
       all = true
     } else {
       // determine matching item to give from player's inventory
-      // prioritize newest items
-      targetItem = ArgParser.parseDot(targetItem, [...player.inventory].reverse())
+      targetItem = ArgParser.parseDot(targetItem, [...player.inventory])
     }
 
     // if player doesn't have matching item in inventory, reject command
@@ -132,10 +131,10 @@ function giveItem (targetItem, player, target) {
   target.addItem(targetItem)
 
   // announce giving item
-  B.sayAt(player, `You give ${TraceryUtil.pluralizeItem(targetItem)} to ${target.name}.`)
-  B.sayAtExcept(player.room, B.capitalize(`${player.name} gives ${TraceryUtil.pluralizeItem(targetItem)} to ${target.name}.`), [player, target])
+  B.sayAt(player, `You give ${TraceryUtil.pluralizeEntity(targetItem)} to ${target.name}.`)
+  B.sayAtExcept(player.room, B.capitalize(`${player.name} gives ${TraceryUtil.pluralizeEntity(targetItem)} to ${target.name}.`), [player, target])
   if (!target.isNpc) {
-    B.sayAt(target, `${player.name} gives ${TraceryUtil.pluralizeItem(targetItem)} to you.`)
+    B.sayAt(target, `${player.name} gives ${TraceryUtil.pluralizeEntity(targetItem)} to you.`)
   }
 
   /**
@@ -161,10 +160,10 @@ function giveItem (targetItem, player, target) {
 function checkInventoryFull (targetItem, player, target) {
   // if recipient's inventory is full, stop
   if (target.isInventoryFull()) {
-    B.sayAt(player, `You try to give ${TraceryUtil.pluralizeItem(targetItem)} to ${target.name}, but their inventory is full.`)
-    B.sayAtExcept(player.room, `${player.name} tries to give ${TraceryUtil.pluralizeItem(targetItem)} to ${target.name}, but their inventory is full.`, [player, target])
+    B.sayAt(player, `You try to give ${TraceryUtil.pluralizeEntity(targetItem)} to ${target.name}, but their inventory is full.`)
+    B.sayAtExcept(player.room, `${player.name} tries to give ${TraceryUtil.pluralizeEntity(targetItem)} to ${target.name}, but their inventory is full.`, [player, target])
     if (!target.isNpc) {
-      B.sayAt(target, `${player.name} tries to give ${TraceryUtil.pluralizeItem(targetItem)} to you, but your inventory is full.`)
+      B.sayAt(target, `${player.name} tries to give ${TraceryUtil.pluralizeEntity(targetItem)} to you, but your inventory is full.`)
     }
     return true
   } else {

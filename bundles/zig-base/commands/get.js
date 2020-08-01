@@ -51,9 +51,8 @@ module.exports = {
     // (e.g., 'get ball bag')
     } else {
       // find container in room, inventory, or equipment
-      // check newest containers in room and player inventory first
-      container = ArgParser.parseDot(parts[1], [...player.room.items].reverse()) ||
-                  ArgParser.parseDot(parts[1], [...player.inventory].reverse()) ||
+      container = ArgParser.parseDot(parts[1], player.room.items) ||
+                  ArgParser.parseDot(parts[1], player.inventory) ||
                   ArgParser.parseDot(parts[1], player.equipment)
 
       // if no container found, reject command
@@ -63,12 +62,12 @@ module.exports = {
 
       // if targeted container isn't a container, reject command
       if (container.type !== ItemType.CONTAINER) {
-        return B.sayAt(player, `${B.capitalize(TraceryUtil.pluralizeItem(container))} isn't a container.`)
+        return B.sayAt(player, `${B.capitalize(TraceryUtil.pluralizeEntity(container))} isn't a container.`)
       }
 
       // if container is closed, reject command
       if (container.closed) {
-        return B.sayAt(player, `${B.capitalize(TraceryUtil.pluralizeItem(container))} is closed.`)
+        return B.sayAt(player, `${B.capitalize(TraceryUtil.pluralizeEntity(container))} is closed.`)
       }
 
       // set container as source
@@ -126,7 +125,7 @@ module.exports = {
 function getItem (item, player, container, arg0) {
   // if item is irretrievable, stop
   if (item.metadata.irretrievable) {
-    return B.sayAt(player, `You can't ${arg0} ${TraceryUtil.pluralizeItem(item, 1)}.`)
+    return B.sayAt(player, `You can't ${arg0} ${TraceryUtil.pluralizeEntity(item)}.`)
   }
 
   // if container was provided, remove item from it
@@ -142,8 +141,8 @@ function getItem (item, player, container, arg0) {
 
   // announce getting item
   if (container) {
-    B.sayAt(player, `You ${arg0} ${TraceryUtil.pluralizeItem(item)} from ${TraceryUtil.pluralizeItem(container)}.`)
-    B.sayAtExcept(player.room, `${player.name} ${arg0}s ${TraceryUtil.pluralizeItem(item)} from ${TraceryUtil.pluralizeItem(container)}.`, [player])
+    B.sayAt(player, `You ${arg0} ${TraceryUtil.pluralizeEntity(item)} from ${TraceryUtil.pluralizeEntity(container)}.`)
+    B.sayAtExcept(player.room, `${player.name} ${arg0}s ${TraceryUtil.pluralizeEntity(item)} from ${TraceryUtil.pluralizeEntity(container)}.`, [player])
 
     /**
      * @event Item#itemRetrieved
@@ -151,8 +150,8 @@ function getItem (item, player, container, arg0) {
     */
     container.emit('itemRetrieved', player, item)
   } else {
-    B.sayAt(player, `You ${arg0} ${TraceryUtil.pluralizeItem(item)}.`)
-    B.sayAtExcept(player.room, `${player.name} ${arg0}s ${TraceryUtil.pluralizeItem(item)}.`, [player])
+    B.sayAt(player, `You ${arg0} ${TraceryUtil.pluralizeEntity(item)}.`)
+    B.sayAtExcept(player.room, `${player.name} ${arg0}s ${TraceryUtil.pluralizeEntity(item)}.`, [player])
 
     /**
      * @event Room#itemRetrieved
@@ -188,12 +187,12 @@ function checkInventoryFull (item, player, container, sourceType) {
   // if recipient's inventory is full, stop
   if (player.isInventoryFull()) {
     if (sourceType === 'room') {
-      B.sayAt(player, `You try to get ${TraceryUtil.pluralizeItem(item)} but your inventory is full.`)
-      B.sayAtExcept(player.room, `${player.name} tries to get ${TraceryUtil.pluralizeItem(item)} but their inventory is full.`, [player])
+      B.sayAt(player, `You try to get ${TraceryUtil.pluralizeEntity(item)} but your inventory is full.`)
+      B.sayAtExcept(player.room, `${player.name} tries to get ${TraceryUtil.pluralizeEntity(item)} but their inventory is full.`, [player])
       return true
     } if (sourceType === 'container') {
-      B.sayAt(player, `You try to get ${TraceryUtil.pluralizeItem(item)} from ${TraceryUtil.pluralizeItem(container)} but your inventory is full.`)
-      B.sayAtExcept(player.room, `${player.name} tries to get ${TraceryUtil.pluralizeItem(item)} from ${TraceryUtil.pluralizeItem(container)}, but their inventory is full.`, [player])
+      B.sayAt(player, `You try to get ${TraceryUtil.pluralizeEntity(item)} from ${TraceryUtil.pluralizeEntity(container)} but your inventory is full.`)
+      B.sayAtExcept(player.room, `${player.name} tries to get ${TraceryUtil.pluralizeEntity(item)} from ${TraceryUtil.pluralizeEntity(container)}, but their inventory is full.`, [player])
       return true
     }
   } else {

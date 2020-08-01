@@ -99,6 +99,13 @@
         "namespace": "zmdev_",
         "db": "help"
       }
+    },
+    "metadata": {
+      "source": "CouchDb",
+      "config": {
+        "namespace": "zmdev_",
+        "db": "metadata"
+      }
     }
   }
 }

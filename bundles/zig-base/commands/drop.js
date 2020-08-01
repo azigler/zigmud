@@ -35,7 +35,7 @@ module.exports = {
     } else {
       // search for item to drop
       // prioritize newest items
-      const item = ArgParser.parseDot(args, [...player.inventory].reverse())
+      const item = ArgParser.parseDot(args, player.inventory)
       dropItem(item, player, arg0)
     }
   }
@@ -55,8 +55,8 @@ function dropItem (item, player, arg0) {
   player.room.addItem(item)
 
   // announce dropping item
-  B.sayAt(player, `You ${arg0} ${TraceryUtil.pluralizeItem(item)}.`)
-  B.sayAtExcept(player.room, `${player.name} ${arg0}${arg0 === 'relinquish' ? 'es' : 's'} ${TraceryUtil.pluralizeItem(item, 1)}.`, [player])
+  B.sayAt(player, `You ${arg0} ${TraceryUtil.pluralizeEntity(item)}.`)
+  B.sayAtExcept(player.room, `${player.name} ${arg0}${arg0 === 'relinquish' ? 'es' : 's'} ${TraceryUtil.pluralizeEntity(item)}.`, [player])
 
   /**
    * @event Item#drop

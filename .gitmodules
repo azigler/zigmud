@@ -10,3 +10,6 @@
 [submodule "bundles/ranvier-zpanel"]
 	path = bundles/ranvier-zpanel
 	url = https://github.com/azigler/ranvier-zpanel
+[submodule "bundles/ranvier-tracery"]
+	path = bundles/ranvier-tracery
+	url = https://github.com/azigler/ranvier-tracery

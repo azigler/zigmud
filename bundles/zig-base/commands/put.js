@@ -27,7 +27,7 @@ module.exports = {
     const source = player.inventory
 
     // search for item in player's inventory
-    const item = ArgParser.parseDot(parts[0], [...source].reverse())
+    const item = ArgParser.parseDot(parts[0], source)
 
     // if item found but no container provided, reject command
     if (parts.length === 1 && item) {
@@ -43,8 +43,8 @@ module.exports = {
 
     // determine the destination container
     // check newest containers in room and player inventory first
-    const toContainer = ArgParser.parseDot(parts[1], [...player.room.items].reverse()) ||
-                        ArgParser.parseDot(parts[1], [...player.inventory].reverse()) ||
+    const toContainer = ArgParser.parseDot(parts[1], player.room.items) ||
+                        ArgParser.parseDot(parts[1], player.inventory) ||
                         ArgParser.parseDot(parts[1], player.equipment)
 
     // if putting all items from inventory into container
@@ -72,7 +72,7 @@ module.exports = {
     // if item not found, reject command
     if (!item) {
       if (toContainer) {
-        return B.sayAt(player, `${B.capitalize(arg0)} what in ${TraceryUtil.pluralizeItem(toContainer)}?`)
+        return B.sayAt(player, `${B.capitalize(arg0)} what in ${TraceryUtil.pluralizeEntity(toContainer)}?`)
       } else {
         return B.sayAt(player, `${B.capitalize(arg0)} what in what?`)
       }
@@ -93,8 +93,8 @@ function putItem (item, player, container, arg0) {
   container.addItem(item)
 
   // announce putting item
-  B.sayAt(player, `You ${arg0} ${TraceryUtil.pluralizeItem(item)} in${arg0 === 'stow' ? '' : 'to'} ${TraceryUtil.pluralizeItem(container)}.`)
-  B.sayAtExcept(player.room, `${player.name} ${arg0}s ${TraceryUtil.pluralizeItem(item)} in${arg0 === 'stow' ? '' : 'to'} ${TraceryUtil.pluralizeItem(container)}.`, player)
+  B.sayAt(player, `You ${arg0} ${TraceryUtil.pluralizeEntity(item)} in${arg0 === 'stow' ? '' : 'to'} ${TraceryUtil.pluralizeEntity(container)}.`)
+  B.sayAtExcept(player.room, `${player.name} ${arg0}s ${TraceryUtil.pluralizeEntity(item)} in${arg0 === 'stow' ? '' : 'to'} ${TraceryUtil.pluralizeEntity(container)}.`, player)
 
   /**
    * @event Item#put
@@ -119,8 +119,8 @@ function putItem (item, player, container, arg0) {
 function checkInventoryFull (item, player, container, arg0) {
   // if container's inventory is full, stop
   if (container.isInventoryFull()) {
-    B.sayAt(player, `You try to ${arg0} ${TraceryUtil.pluralizeItem(item)} in${arg0 === 'stow' ? '' : 'to'} ${TraceryUtil.pluralizeItem(container)} but it's full.`)
-    B.sayAtExcept(player.room, `${player.name} tries to ${arg0} ${TraceryUtil.pluralizeItem(item)} in${arg0 === 'stow' ? '' : 'to'} ${TraceryUtil.pluralizeItem(container)} but it's full.`, [player])
+    B.sayAt(player, `You try to ${arg0} ${TraceryUtil.pluralizeEntity(item)} in${arg0 === 'stow' ? '' : 'to'} ${TraceryUtil.pluralizeEntity(container)} but it's full.`)
+    B.sayAtExcept(player.room, `${player.name} tries to ${arg0} ${TraceryUtil.pluralizeEntity(item)} in${arg0 === 'stow' ? '' : 'to'} ${TraceryUtil.pluralizeEntity(container)} but it's full.`, [player])
     return true
   } else {
     return false
@@ -131,19 +131,19 @@ function checkInventoryFull (item, player, container, arg0) {
 function checkPutting (item, player, toContainer, arg0) {
   // if targeted destination container isn't a container, reject command
   if (toContainer.type !== ItemType.CONTAINER) {
-    B.sayAt(player, `${B.capitalize(TraceryUtil.pluralizeItem(toContainer))} isn't a container.`)
+    B.sayAt(player, `${B.capitalize(TraceryUtil.pluralizeEntity(toContainer))} isn't a container.`)
     return false
   }
 
   // if item and destination container are the same, reject command
   if (toContainer.uuid === item.uuid) {
-    B.sayAt(player, `You can't put ${TraceryUtil.pluralizeItem(toContainer)} inside of itself.`)
+    B.sayAt(player, `You can't put ${TraceryUtil.pluralizeEntity(toContainer)} inside of itself.`)
     return false
   }
 
   // if destination container is closed, reject command
   if (toContainer.closed) {
-    B.sayAt(player, `${B.capitalize(TraceryUtil.pluralizeItem(toContainer))} is closed.`)
+    B.sayAt(player, `${B.capitalize(TraceryUtil.pluralizeEntity(toContainer))} is closed.`)
     return false
   }
 

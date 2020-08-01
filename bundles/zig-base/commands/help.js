@@ -75,7 +75,7 @@ function render (state, hfile) {
     else return 'HELP'
   }
 
-  const top = B.center(width, commandType(hfile), 'white', '-') + nl
+  const top = B.center(width, ' ' + commandType(hfile) + ' ', 'white', '-') + nl
   let header = top + B.center(width, name, 'white') + nl + bar + nl
 
   // handle helpfile for a command
@@ -102,7 +102,7 @@ function render (state, hfile) {
 
   let footer = bar
   if (hfile.related.length) {
-    footer = B.center(width, 'RELATED', 'white', '-') + nl
+    footer = B.center(width, ' RELATED', 'white', '-') + nl
     const related = hfile.related.join(', ')
     footer += B.center(width, related) + nl
     footer += bar
