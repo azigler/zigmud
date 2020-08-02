@@ -4,6 +4,19 @@ const TraceryUtil = require('./../../ranvier-tracery/lib/TraceryUtil')
 
 const nl = '\r\n'
 
+// helper function for capitalizing a Tracery-flattened GameEntity list
+function capitalize (line) {
+  let first = line.slice(2, 3)
+  if (first === 'n') {
+    first = line.slice(1, 2)
+    return line.slice(0, 1) + first.toUpperCase() + line.slice(2)
+  } else if (first !== 'a' && first.match(/^[a-zA-Z]+$/g)) {
+    return line.slice(0, 2) + '  ' + first.toUpperCase() + line.slice(3)
+  } else {
+    return line.slice(0, 2) + first.toUpperCase() + line.slice(3)
+  }
+}
+
 /**
  * Look at a GameEntity
  * (e.g., Item, Character, or a Room)
@@ -41,13 +54,14 @@ function lookRoom (state, player, arg0) {
   B.sayAt(player, room.title, undefined, undefined, undefined, 1)
 
   // print decorative divider line
-  B.sayAt(player, B.line(39, '*~') + '*', false)
+  B.sayAt(player, B.line(39, /* '*~' */ '') /* + '*' */, false)
 
-  // print room description
+  // print room description with an indent
+  B.at(player, '  ', false)
   B.sayAt(player, B.indent(B.wrap(room.description, 78), 1), false)
 
   // start printing the room's exits
-  B.at(player, `${nl} [exits: `)
+  B.at(player, `${nl}  [exits: `)
 
   // find explicitly defined exits
   let foundExits = Array.from(room.exits).map(ex => {
@@ -106,7 +120,7 @@ function lookRoom (state, player, arg0) {
       if (otherPlayer === player) {
         return
       }
-      B.sayAt(player, `  ${otherPlayer.name} is here`, false)
+      B.sayAt(player, `  ${otherPlayer.name} is here.`, false)
     })
   }
 
@@ -116,7 +130,7 @@ function lookRoom (state, player, arg0) {
 
     for (const print of TraceryUtil.pluralizeEntityList(room.npcs, undefined, true)) {
       // TODO: add roomDesc
-      B.sayAt(player, print + ' is here', false)
+      B.sayAt(player, (capitalize(print) + ' is here.'), false)
     }
   }
 
@@ -125,7 +139,7 @@ function lookRoom (state, player, arg0) {
     B.at(player, nl)
 
     for (const print of TraceryUtil.pluralizeEntityList(room.items, 'roomDesc', true)) {
-      B.sayAt(player, print, false)
+      B.sayAt(player, capitalize(print) + '.', false)
     }
   }
 }
