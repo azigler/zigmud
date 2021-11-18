@@ -1,4 +1,6 @@
-# zigmud
+![](https://images.prismic.io/andrewzigler/5271ff8a-093f-40ed-a08f-8a2fb3d7764e_zigmud.jpg?ixlib=gatsbyFP&auto=compress%2Cformat&fit=max&q=50&rect=0%2C0%2C1200%2C628&w=1200&h=628)
+
+# zigmud *\*\*(deprecated)\*\**
 
 > Experimental fork of [RanvierMUD/trpg-skeleton](https://github.com/RanvierMUD/trpg-skeleton) powered by an experimental fork of [RanvierMUD/core](https://github.com/azigler/core)
 
